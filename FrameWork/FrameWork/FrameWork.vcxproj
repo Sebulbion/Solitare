@@ -175,6 +175,7 @@
     <ResourceCompile Include="FrameWork.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="CardAlpha.bmp" />
     <Image Include="CardAtlas.bmp" />
     <Image Include="CardAtlasMask.bmp" />
   </ItemGroup>
