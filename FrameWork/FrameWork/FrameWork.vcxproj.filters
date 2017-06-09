@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Stacks">
+      <UniqueIdentifier>{2d0fde78-b0e1-4cd5-b902-969b96aa6cae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -75,19 +78,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Stack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Stacks</Filter>
     </ClInclude>
     <ClInclude Include="StockStack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WasteStack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FoundationStack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Stacks</Filter>
     </ClInclude>
     <ClInclude Include="TableauStack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Stacks</Filter>
+    </ClInclude>
+    <ClInclude Include="WasteStack.h">
+      <Filter>Header Files\Stacks</Filter>
+    </ClInclude>
+    <ClInclude Include="FoundationStack.h">
+      <Filter>Header Files\Stacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

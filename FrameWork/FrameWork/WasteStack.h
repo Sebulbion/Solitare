@@ -13,5 +13,9 @@ public:
 	virtual IStack * SplitStack() override;
 	virtual void SetPos(const TPosition &) override;
 	virtual void Draw() override;
+
+private:
+	CWasteStack(const CWasteStack& _kr) = delete;
+	CWasteStack& operator= (const CWasteStack& _kr) = delete;
 };
 

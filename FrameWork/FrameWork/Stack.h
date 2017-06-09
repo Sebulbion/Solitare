@@ -39,6 +39,8 @@ public:
 
 protected:
 	IStack();
+	IStack(const IStack& _kr) = delete;
+	IStack& operator= (const IStack& _kr) = delete;
 
 	// The dimensions of the stack when laid out on the screen
 	float m_fWidth;

@@ -13,5 +13,9 @@ public:
 	virtual IStack * SplitStack() override;
 	virtual void SetPos(const TPosition &) override;
 	virtual void Draw() override;
+
+private:
+	CTableauStack(const CTableauStack& _kr) = delete;
+	CTableauStack& operator= (const CTableauStack& _kr) = delete;
 };
 
