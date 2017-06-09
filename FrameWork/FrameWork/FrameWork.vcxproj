@@ -145,17 +145,38 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp" />
+    <ClCompile Include="Card.cpp" />
     <ClCompile Include="clock.cpp" />
+    <ClCompile Include="FoundationStack.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="IStack.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="StockStack.cpp" />
+    <ClCompile Include="TableauStack.cpp" />
+    <ClCompile Include="WasteStack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backbuffer.h" />
+    <ClInclude Include="Card.h" />
     <ClInclude Include="clock.h" />
+    <ClInclude Include="FoundationStack.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="StockStack.h" />
+    <ClInclude Include="TableauStack.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="WasteStack.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FrameWork.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="CardAtlas.bmp" />
+    <Image Include="CardAtlasMask.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

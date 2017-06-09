@@ -17,9 +17,15 @@
 
 // Library Includes
 #include <windows.h>
+#include <array>
 
 // Local Includes
 #include "clock.h"
+#include "Stack.h"
+#include "WasteStack.h"
+#include "StockStack.h"
+#include "FoundationStack.h"
+#include "TableauStack.h"
 
 // Types
 
@@ -57,6 +63,13 @@ private:
     CGame& operator= (const CGame& _kr);
 
     // Member Variables
+	IStack* m_pStackGrabbed;
+
+	CStockStack m_stockStack;
+	CWasteStack m_wasteStack;
+	std::array<CFoundationStack, 4> m_arrFoundationStacks;
+	std::array<CTableauStack, 7> m_arrTableauStacks;
+
 public:
 
 protected:

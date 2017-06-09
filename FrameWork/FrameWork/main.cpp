@@ -28,15 +28,22 @@ WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 {
     switch (_uiMsg)
     {
-        case WM_DESTROY:
-        {
-            PostQuitMessage(0);
+	case WM_PAINT:
+	{
+		CGame::GetInstance().Draw();
+		break;
+	}
 
-            return(0);
-        }
-        break;
+    case WM_DESTROY:
+    {
+        PostQuitMessage(0);
 
-        default:break;
+        return(0);
+		break;
+    }
+
+    default:
+		break;
     } 
 
     return (DefWindowProc(_hWnd, _uiMsg, _wParam, _lParam));

@@ -36,6 +36,7 @@ CGame::CGame()
 , m_hApplicationInstance(0)
 , m_hMainWindow(0)
 , m_pBackBuffer(0)
+, m_pStackGrabbed(nullptr)
 {
 
 }
@@ -62,7 +63,9 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
     m_pBackBuffer = new CBackBuffer();
     VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
-	ShowCursor(false);
+	m_stockStack = CStockStack::CreateFullDeck();
+	//m_arrTableauStacks
+
 
     return (true);
 }
@@ -72,8 +75,21 @@ CGame::Draw()
 {
     m_pBackBuffer->Clear();
 
-// Do all the game’s drawing here...
-
+	if (m_pStackGrabbed)
+	{
+		m_pStackGrabbed->Draw();
+	}
+	
+	m_stockStack.Draw();
+	m_wasteStack.Draw();
+	for (CFoundationStack& rFoundationStack: m_arrFoundationStacks)
+	{
+		rFoundationStack.Draw();
+	}
+	for (CTableauStack& rTableauStack : m_arrTableauStacks)
+	{
+		rTableauStack.Draw();
+	}
 
     m_pBackBuffer->Present();
 }

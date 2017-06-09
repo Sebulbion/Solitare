@@ -49,15 +49,6 @@ public:
     void TranslateAbsolute(int _iX, int _iY);
 
 protected:
-
-private:
-    CSprite(const CSprite& _kr);
-    CSprite& operator= (const CSprite& _kr);
-
-    // Member Variables
-public:
-
-protected:
     //Center handle
     int m_iX;
     int m_iY;
