@@ -15,6 +15,6 @@ public:
 	virtual void Draw() override;
 
 	// Create a randomly shuffled deck of 52 cards
-	static CStockStack CreateFullDeck();
+	static CStockStack* CreateFullDeck();
 };
 

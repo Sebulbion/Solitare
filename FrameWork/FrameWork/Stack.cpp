@@ -9,6 +9,10 @@ IStack::IStack()
 
 IStack::~IStack()
 {
+	for (CCard* pCard : m_listpCards)
+	{
+		delete pCard;
+	}
 }
 
 TPosition IStack::GetPos() const
@@ -26,17 +30,17 @@ float IStack::GetHeight() const
 	return m_fHeight;
 }
 
-void IStack::Push(const CCard & _krCard)
+void IStack::Push(CCard* const & _krpCard)
 {
-	m_listCards.push_front(_krCard);
+	m_listpCards.push_front(_krpCard);
 }
 
-CCard & IStack::Top()
+CCard*& IStack::Top()
 {
-	return m_listCards.front();
+	return m_listpCards.front();
 }
 
 void IStack::Pop()
 {
-	m_listCards.pop_front();
+	m_listpCards.pop_front();
 }

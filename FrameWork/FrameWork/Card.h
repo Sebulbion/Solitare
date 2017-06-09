@@ -23,5 +23,8 @@ public:
 
 private:
 	CSprite* m_pSprite;
+
+	CCard(const CCard& _kr) = delete;
+	CCard& operator= (const CCard& _kr) = delete;
 };
 

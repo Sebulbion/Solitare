@@ -11,6 +11,7 @@ CCard::CCard(ESUIT _eSuite, size_t _card_num) :
 
 CCard::~CCard()
 {
+	delete m_pSprite;
 }
 
 void CCard::Draw()

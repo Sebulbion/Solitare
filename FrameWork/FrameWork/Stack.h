@@ -33,8 +33,8 @@ public:
 	// Get the height of the stack as laid out on the screen
 	float GetHeight() const;
 
-	void Push(const CCard&);
-	CCard& Top();
+	void Push(CCard* const &);
+	CCard*& Top();
 	void Pop();
 
 protected:
@@ -47,6 +47,6 @@ protected:
 	// Top left corner position of the stack
 	TPosition m_pos;
 
-	std::list<CCard> m_listCards;
+	std::list<CCard*> m_listpCards;
 };
 

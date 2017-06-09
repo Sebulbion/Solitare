@@ -30,10 +30,10 @@ void CStockStack::Draw()
 {
 }
 
-CStockStack CStockStack::CreateFullDeck()
+CStockStack* CStockStack::CreateFullDeck()
 {
-	CStockStack stockStack;
-	std::vector<CCard> vecTempDeck;
+	CStockStack* stockStack = new CStockStack();
+	std::vector<CCard*> vecTempDeck;
 
 	// Create an ordered vector of 52 cards
 	for (int iSuit = 0; iSuit != CCard::ESUIT::NO_SUIT; ++iSuit)
@@ -42,7 +42,7 @@ CStockStack CStockStack::CreateFullDeck()
 
 		for (size_t szCardNum = 0; szCardNum < 13; ++szCardNum)
 		{
-			vecTempDeck.emplace_back(eSuit, szCardNum);
+			vecTempDeck.push_back(new CCard(eSuit, szCardNum));
 		}
 	}
 
@@ -51,7 +51,7 @@ CStockStack CStockStack::CreateFullDeck()
 	std::random_shuffle(vecTempDeck.begin(), vecTempDeck.end());
 
 	// Copyshuffled vector to stock stacks internal list
-	std::copy(vecTempDeck.begin(), vecTempDeck.end(), std::back_inserter(stockStack.m_listCards));
+	std::copy(vecTempDeck.begin(), vecTempDeck.end(), std::back_inserter(stockStack->m_listpCards));
 
 	return stockStack;
 }

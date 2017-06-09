@@ -37,8 +37,17 @@ CGame::CGame()
 , m_hMainWindow(0)
 , m_pBackBuffer(0)
 , m_pStackGrabbed(nullptr)
+, m_pStockStack(new CStockStack)
+, m_pWasteStack(new CWasteStack)
 {
-
+	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
+	{
+		rpTableauStack = new CTableauStack;
+	}
+	for (CFoundationStack*& rpFoundationStack : m_arrpFoundationStacks)
+	{
+		rpFoundationStack = new CFoundationStack;
+	}
 }
 
 CGame::~CGame()
@@ -48,6 +57,24 @@ CGame::~CGame()
 
     delete m_pClock;
     m_pClock = 0;
+
+	// Delete stacks
+	if (m_pStackGrabbed)
+		delete m_pStackGrabbed;
+	if (m_pStockStack)
+		delete m_pStockStack;
+	if (m_pWasteStack)
+		delete m_pWasteStack;
+	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
+	{
+		if (rpTableauStack)
+			delete rpTableauStack;
+	}
+	for (CFoundationStack*& rpFoundationStack : m_arrpFoundationStacks)
+	{
+		if (rpFoundationStack)
+			delete rpFoundationStack;
+	}
 }
 
 bool
@@ -63,13 +90,13 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
     m_pBackBuffer = new CBackBuffer();
     VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
-	m_stockStack = CStockStack::CreateFullDeck();
-	m_stockStack.SetPos({ 0, 0 });
+	m_pStockStack = CStockStack::CreateFullDeck();
+	m_pStockStack->SetPos({ 0, 0 });
 
-	CCard card = m_stockStack.Top();
-	m_stockStack.Pop();
-	m_arrTableauStacks.at(0).Push(card);
-	m_arrTableauStacks.at(0).SetPos({ 0, 0 });
+	CCard* pCard = m_pStockStack->Top();
+	m_pStockStack->Pop();
+	m_arrpTableauStacks.at(0)->Push(pCard);
+	m_arrpTableauStacks.at(0)->SetPos({ 0, 0 });
 
     return (true);
 }
@@ -84,15 +111,15 @@ CGame::Draw()
 		m_pStackGrabbed->Draw();
 	}
 	
-	m_stockStack.Draw();
-	m_wasteStack.Draw();
-	for (CFoundationStack& rFoundationStack: m_arrFoundationStacks)
+	m_pStockStack->Draw();
+	m_pWasteStack->Draw();
+	for (CFoundationStack*& rpFoundationStack: m_arrpFoundationStacks)
 	{
-		rFoundationStack.Draw();
+		rpFoundationStack->Draw();
 	}
-	for (CTableauStack& rTableauStack : m_arrTableauStacks)
+	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
 	{
-		rTableauStack.Draw();
+		rpTableauStack->Draw();
 	}
 
     m_pBackBuffer->Present();

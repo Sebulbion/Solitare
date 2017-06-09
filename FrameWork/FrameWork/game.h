@@ -59,16 +59,16 @@ protected:
 
 private:
     CGame();
-    CGame(const CGame& _kr);
-    CGame& operator= (const CGame& _kr);
+    CGame(const CGame& _kr) = delete;
+    CGame& operator= (const CGame& _kr) = delete;
 
     // Member Variables
 	IStack* m_pStackGrabbed;
 
-	CStockStack m_stockStack;
-	CWasteStack m_wasteStack;
-	std::array<CFoundationStack, 4> m_arrFoundationStacks;
-	std::array<CTableauStack, 7> m_arrTableauStacks;
+	CStockStack* m_pStockStack;
+	CWasteStack* m_pWasteStack;
+	std::array<CFoundationStack*, 4> m_arrpFoundationStacks;
+	std::array<CTableauStack*, 7> m_arrpTableauStacks;
 
 public:
 
