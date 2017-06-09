@@ -22,6 +22,6 @@ public:
 	void SetPos(const TPosition&);
 
 private:
-	CSprite m_sprite;
+	CSprite* m_pSprite;
 };
 

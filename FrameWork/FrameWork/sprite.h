@@ -63,7 +63,8 @@ protected:
     static int s_iRefCount;
 
 private:
-
+	CSprite(const CSprite& _kr) = delete;
+	CSprite& operator= (const CSprite& _kr) = delete;
 };
 
 #endif    // __SPRITE_H__

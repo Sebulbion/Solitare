@@ -2,9 +2,10 @@
 #include "resource.h"
 
 
-CCard::CCard(ESUIT _eSuite, size_t _card_num)
+CCard::CCard(ESUIT _eSuite, size_t _card_num) :
+	m_pSprite(new CSprite())
 {
-	m_sprite.Initialise(IDB_CARDATLAS, IDB_CARDATLASMASK);
+	m_pSprite->Initialise(IDB_CARDATLAS, IDB_CARDATLASMASK);
 }
 
 
@@ -14,11 +15,11 @@ CCard::~CCard()
 
 void CCard::Draw()
 {
-	m_sprite.Draw();
+	m_pSprite->Draw();
 }
 
 void CCard::SetPos(const TPosition& _krpos)
 {
-	m_sprite.SetX(_krpos.x);
-	m_sprite.SetY(_krpos.y);
+	m_pSprite->SetX(_krpos.x);
+	m_pSprite->SetY(_krpos.y);
 }

@@ -64,12 +64,12 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
     VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
 	m_stockStack = CStockStack::CreateFullDeck();
-	m_stockStack.SetPos({ 50, 50 });
+	m_stockStack.SetPos({ 0, 0 });
 
 	CCard card = m_stockStack.Top();
 	m_stockStack.Pop();
 	m_arrTableauStacks.at(0).Push(card);
-	m_arrTableauStacks.at(0).SetPos({ 75, 50 });
+	m_arrTableauStacks.at(0).SetPos({ 0, 0 });
 
     return (true);
 }
