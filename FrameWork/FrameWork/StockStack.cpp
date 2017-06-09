@@ -55,3 +55,8 @@ CStockStack CStockStack::CreateFullDeck()
 
 	return stockStack;
 }
+
+void CStockStack::SetPos(const TPosition & _krpos)
+{
+	m_pos = _krpos;
+}

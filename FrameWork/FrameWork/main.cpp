@@ -28,12 +28,6 @@ WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 {
     switch (_uiMsg)
     {
-	case WM_PAINT:
-	{
-		CGame::GetInstance().Draw();
-		break;
-	}
-
     case WM_DESTROY:
     {
         PostQuitMessage(0);
@@ -100,8 +94,8 @@ WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdline, int _i
     MSG msg;
     ZeroMemory(&msg, sizeof(MSG));
 
-    const int kiWidth = 400;
-    const int kiHeight = 400;
+    const int kiWidth = 1600;
+    const int kiHeight = 900;
 
     HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"BSENGG Framework");
 

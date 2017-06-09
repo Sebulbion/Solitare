@@ -24,3 +24,8 @@ IStack * CWasteStack::SplitStack()
 void CWasteStack::Draw()
 {
 }
+
+void CWasteStack::SetPos(const TPosition & _krpos)
+{
+	m_pos = _krpos;
+}

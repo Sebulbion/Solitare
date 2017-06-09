@@ -23,4 +23,17 @@ IStack * CTableauStack::SplitStack()
 
 void CTableauStack::Draw()
 {
+	for (CCard& rCard : m_listCards)
+	{
+		rCard.Draw();
+	}
+}
+
+void CTableauStack::SetPos(const TPosition & _krpos)
+{
+	m_pos = _krpos;
+	for (CCard& rCard : m_listCards)
+	{
+		rCard.SetPos(m_pos);
+	}
 }

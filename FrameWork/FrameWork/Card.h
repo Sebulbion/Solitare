@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sprite.h"
+#include "Position.h"
 
 class CCard
 {
@@ -16,6 +17,9 @@ public:
 
 	CCard(ESUIT, size_t _card_num);
 	~CCard();
+
+	void Draw();
+	void SetPos(const TPosition&);
 
 private:
 	CSprite m_sprite;

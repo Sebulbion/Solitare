@@ -11,6 +11,7 @@ public:
 	// Inherited via IStack
 	virtual bool TryPlace(IStack * pStack) override;
 	virtual IStack * SplitStack() override;
+	virtual void SetPos(const TPosition &) override;
 	virtual void Draw() override;
 };
 

@@ -24,3 +24,8 @@ IStack * CFoundationStack::SplitStack()
 void CFoundationStack::Draw()
 {
 }
+
+void CFoundationStack::SetPos(const TPosition & _krpos)
+{
+	m_pos = _krpos;
+}

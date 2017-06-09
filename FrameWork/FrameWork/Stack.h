@@ -22,7 +22,7 @@ public:
 	virtual void Draw() = 0;
 
 	// Set the position of the top left corner of the stack
-	void SetPos(const TPosition&);
+	virtual void SetPos(const TPosition&) = 0;
 	
 	// Get the position of the top left corner of the stack
 	TPosition GetPos() const;
@@ -32,6 +32,10 @@ public:
 
 	// Get the height of the stack as laid out on the screen
 	float GetHeight() const;
+
+	void Push(const CCard&);
+	CCard& Top();
+	void Pop();
 
 protected:
 	IStack();

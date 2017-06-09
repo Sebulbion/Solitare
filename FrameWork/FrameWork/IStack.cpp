@@ -11,11 +11,6 @@ IStack::~IStack()
 {
 }
 
-void IStack::SetPos(const TPosition& _krpos)
-{
-	m_pos = _krpos;
-}
-
 TPosition IStack::GetPos() const
 {
 	return m_pos;
@@ -29,4 +24,19 @@ float IStack::GetWidth() const
 float IStack::GetHeight() const
 {
 	return m_fHeight;
+}
+
+void IStack::Push(const CCard & _krCard)
+{
+	m_listCards.push_front(_krCard);
+}
+
+CCard & IStack::Top()
+{
+	return m_listCards.front();
+}
+
+void IStack::Pop()
+{
+	m_listCards.pop_front();
 }
