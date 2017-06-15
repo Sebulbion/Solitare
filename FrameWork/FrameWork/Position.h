@@ -2,6 +2,6 @@
 
 struct TPosition
 {
-	float x;
-	float y;
+	int x;
+	int y;
 };

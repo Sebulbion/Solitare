@@ -108,5 +108,11 @@
     <Image Include="CardAlpha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="AlphaCardAtlas.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="CardBack.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

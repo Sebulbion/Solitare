@@ -35,7 +35,9 @@ public:
     bool Initialise(int _iResourceID, int _iMaskResourceID);
 
     void Draw();
-	void DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw, int _iYOffset);
+
+	// Draws a section of a spritesheet
+	void DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw);
     void Process(float _fDeltaTick);
 
     int GetWidth() const;

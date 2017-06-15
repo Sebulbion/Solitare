@@ -3,7 +3,7 @@
 
 
 CTableauStack::CTableauStack():
-	m_iCardOffset(20)
+	m_iCardOffset(40)
 {
 }
 
@@ -24,19 +24,19 @@ IStack * CTableauStack::SplitStack()
 
 void CTableauStack::Draw()
 {
-	int i = 0;
-	for (CCard* pCard : m_listpCards)
+	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
-		pCard->DrawSection(13,4,pCard->GetCardNum(), pCard->GetSuit(), i * m_iCardOffset);
-		++i;
+		(*it)->DrawSection(13, 4, (*it)->GetCardNum(), (*it)->GetSuit());
 	}
 }
 
 void CTableauStack::SetPos(const TPosition & _krpos)
 {
 	m_pos = _krpos;
-	for (CCard* pCard : m_listpCards)
+	int i = 0;
+	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
-		pCard->SetPos(m_pos);
+		(*it)->SetPos({ m_pos.x, m_pos.y + i * m_iCardOffset });
+		++i;
 	}
 }

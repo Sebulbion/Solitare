@@ -175,9 +175,11 @@
     <ResourceCompile Include="FrameWork.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="AlphaCardAtlas.bmp" />
     <Image Include="CardAlpha.bmp" />
     <Image Include="CardAtlas.bmp" />
     <Image Include="CardAtlasMask.bmp" />
+    <Image Include="CardBack.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

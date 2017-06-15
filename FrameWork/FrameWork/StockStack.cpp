@@ -42,7 +42,7 @@ CStockStack* CStockStack::CreateFullDeck()
 
 		for (size_t szCardNum = 0; szCardNum < 13; ++szCardNum)
 		{
-			vecTempDeck.push_back(new CCard(eSuit, szCardNum));
+			vecTempDeck.push_back(new CCard(eSuit, szCardNum, false));
 		}
 	}
 

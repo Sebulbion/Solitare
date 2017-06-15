@@ -96,6 +96,12 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	CCard* pCard = m_pStockStack->Top();
 	m_pStockStack->Pop();
 	m_arrpTableauStacks.at(0)->Push(pCard);
+	CCard* pCardTwo = m_pStockStack->Top();
+	m_pStockStack->Pop();
+	m_arrpTableauStacks.at(0)->Push(pCardTwo);
+	CCard* pCardThree = m_pStockStack->Top();
+	m_pStockStack->Pop();
+	m_arrpTableauStacks.at(0)->Push(pCardThree);
 	m_arrpTableauStacks.at(0)->SetPos({ 0, 0 });
 
     return (true);
@@ -137,6 +143,12 @@ void
 CGame::ExecuteOneFrame()
 {
     float fDT = m_pClock->GetDeltaTick();
+
+	//TODO: Remove this temp if statment setting the top card to be revealed
+	if (m_arrpTableauStacks.at(0)->Top()->GetIsRevealed() == false)
+	{
+		m_arrpTableauStacks.at(0)->Top()->RevealCard();
+	}
 
     Process(fDT);
     Draw();
