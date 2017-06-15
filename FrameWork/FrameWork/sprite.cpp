@@ -94,6 +94,35 @@ CSprite::Draw()
     SelectObject(s_hSharedSpriteDC, hOldObj);
 }
 
+void CSprite::DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw,int _iYFrameToDraw, int _iYOffset)
+{
+	int iW = GetWidth() / _iXFrames;
+	int iH = GetHeight() / _iYFrames;
+
+	int iX = m_iX;
+	int iY = m_iY + _iYOffset;
+
+	CBackBuffer* pBackBuffer = CGame::GetInstance().GetBackBuffer();
+
+	HGDIOBJ hOldObj = SelectObject(s_hSharedSpriteDC, m_hMask);
+
+	BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, 0, 0, SRCAND);
+
+	SelectObject(s_hSharedSpriteDC, m_hSprite);
+
+	BitBlt(pBackBuffer->GetBFDC(),
+		iX,
+		iY,
+		iW, 
+		iH, 
+		s_hSharedSpriteDC, 
+		iW * _iXFrameToDraw, 
+		iH * _iYFrameToDraw, 
+		SRCPAINT);
+
+	SelectObject(s_hSharedSpriteDC, hOldObj);
+}
+
 void
 CSprite::Process(float _fDeltaTick)
 {

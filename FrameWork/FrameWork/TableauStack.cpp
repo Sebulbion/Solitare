@@ -2,7 +2,8 @@
 
 
 
-CTableauStack::CTableauStack()
+CTableauStack::CTableauStack():
+	m_iCardOffset(20)
 {
 }
 
@@ -23,9 +24,11 @@ IStack * CTableauStack::SplitStack()
 
 void CTableauStack::Draw()
 {
+	int i = 0;
 	for (CCard* pCard : m_listpCards)
 	{
-		pCard->Draw();
+		pCard->DrawSection(13,4,pCard->GetCardNum(), pCard->GetSuit(), i * m_iCardOffset);
+		++i;
 	}
 }
 

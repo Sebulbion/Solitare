@@ -17,5 +17,7 @@ public:
 private:
 	CTableauStack(const CTableauStack& _kr) = delete;
 	CTableauStack& operator= (const CTableauStack& _kr) = delete;
+
+	int m_iCardOffset;
 };
 

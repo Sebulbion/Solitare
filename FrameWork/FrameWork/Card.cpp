@@ -2,10 +2,12 @@
 #include "resource.h"
 
 
-CCard::CCard(ESUIT _eSuite, size_t _card_num) :
-	m_pSprite(new CSprite())
+CCard::CCard(ESUIT _eSuite, size_t _cardNum) :
+	m_pSprite(new CSprite()),
+	m_eSuit(_eSuite),
+	m_cardNum(_cardNum)
 {
-	m_pSprite->Initialise(IDB_CARDATLAS, IDB_CARDATLASMASK);
+	m_pSprite->Initialise(IDB_CARDATLAS, IDB_BITMAP1);
 }
 
 
@@ -14,9 +16,19 @@ CCard::~CCard()
 	delete m_pSprite;
 }
 
-void CCard::Draw()
+int CCard::GetSuit()
 {
-	m_pSprite->Draw();
+	return m_eSuit;
+}
+
+size_t CCard::GetCardNum()
+{
+	return m_cardNum;
+}
+
+void CCard::DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw, int _iYOffset)
+{
+	m_pSprite->DrawSection(_iXFrames, _iYFrames, _iXFrameToDraw, _iYFrameToDraw, _iYOffset);
 }
 
 void CCard::SetPos(const TPosition& _krpos)
