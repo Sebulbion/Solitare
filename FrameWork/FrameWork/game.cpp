@@ -102,6 +102,15 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	CCard* pCardThree = m_pStockStack->Top();
 	m_pStockStack->Pop();
 	m_arrpTableauStacks.at(0)->Push(pCardThree);
+	CCard* pCardFour = m_pStockStack->Top();
+	m_pStockStack->Pop();
+	m_arrpTableauStacks.at(0)->Push(pCardFour);
+	CCard* pCardFive = m_pStockStack->Top();
+	m_pStockStack->Pop();
+	m_arrpTableauStacks.at(0)->Push(pCardFive);
+	CCard* pCardSix = m_pStockStack->Top();
+	m_pStockStack->Pop();
+	m_arrpTableauStacks.at(0)->Push(pCardSix);
 	m_arrpTableauStacks.at(0)->SetPos({ 0, 0 });
 
     return (true);
@@ -136,6 +145,30 @@ CGame::Process(float _fDeltaTick)
 {
     // Process all the game’s logic here.
 	//Load a new sprite.
+
+	//TODO: Remove this temp movment
+	POINT mousePos;
+	static POINT s_previousMousePos;
+	RECT windowRect;
+	GetWindowRect(GetWindow(), &windowRect);
+	if (GetCursorPos(&mousePos))
+	{
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+		{
+			RECT stackRect = m_arrpTableauStacks.at(0)->GetClickableArea();
+
+			// Magic numbers for the borders
+			if (mousePos.x - windowRect.left - 10 >= stackRect.left &&
+				mousePos.x - windowRect.left - 5 <= stackRect.right &&
+				mousePos.y - windowRect.top - 35 >= stackRect.top &&
+				mousePos.y - windowRect.top + 15 <= stackRect.bottom)
+			{
+				m_arrpTableauStacks.at(0)->SetPos({ stackRect.left + mousePos.x - s_previousMousePos.x,
+					stackRect.top + mousePos.y - s_previousMousePos.y});
+			}
+		}
+	}
+	s_previousMousePos = mousePos;
 	
 }
 

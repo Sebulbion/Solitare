@@ -23,6 +23,9 @@ public:
 
 	// Set the position of the top left corner of the stack
 	virtual void SetPos(const TPosition&) = 0;
+
+	// Returns the box of the stack
+	//virtual RECT GetClickableArea() = 0;
 	
 	// Get the position of the top left corner of the stack
 	TPosition GetPos() const;

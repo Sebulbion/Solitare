@@ -25,6 +25,7 @@ public:
 	TPosition GetPos();
 	void RevealCard();
 	bool GetIsRevealed();
+	CSprite* GetSprite();
 
 private:
 	CSprite* m_pSprite;

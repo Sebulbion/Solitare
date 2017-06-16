@@ -67,3 +67,8 @@ bool CCard::GetIsRevealed()
 {
 	return m_bIsRevealed;
 }
+
+CSprite * CCard::GetSprite()
+{
+	return m_pSprite;
+}

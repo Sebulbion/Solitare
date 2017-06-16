@@ -97,7 +97,7 @@ WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdline, int _i
     const int kiWidth = 1600;
     const int kiHeight = 900;
 
-    HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"BSENGG Framework");
+    HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 
     CGame& rGame = CGame::GetInstance();
 

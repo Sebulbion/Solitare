@@ -30,6 +30,27 @@ void CTableauStack::Draw()
 	}
 }
 
+RECT CTableauStack::GetClickableArea()
+{
+	RECT rect;
+
+	rect.left = GetPos().x;
+	rect.top = GetPos().y;
+	if (m_listpCards.front()->GetIsRevealed())
+	{
+		rect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth() / 13;
+		rect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight() / 4;
+	}
+	else
+	{
+		rect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth();
+		rect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight();
+	}
+	rect.bottom += m_iCardOffset * m_listpCards.size() - 1;
+
+	return rect;
+}
+
 void CTableauStack::SetPos(const TPosition & _krpos)
 {
 	m_pos = _krpos;
