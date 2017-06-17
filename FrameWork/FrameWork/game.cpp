@@ -30,6 +30,7 @@ const int CGame::s_kiTableauStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
 
 // Static Function Prototypes
+static POINT s_previousMousePos;
 
 // Implementation
 
@@ -140,29 +141,37 @@ CGame::Process(float _fDeltaTick)
     // Process all the game’s logic here.
 	//Load a new sprite.
 
-	//TODO: Remove this temp movment
 	POINT mousePos;
-	static POINT s_previousMousePos;
+	GetCursorPos(&mousePos);
+
+	//TODO: Remove this temp movment
+	for (int i = 0; i < s_kszNumTableauStacks; ++i)
+	{
+		SelectStack(m_arrpTableauStacks.at(i), mousePos);
+	}
+
+	s_previousMousePos = mousePos;
+}
+
+void CGame::SelectStack(CTableauStack * _stack, POINT _mousePos)
+{
+
 	RECT windowRect;
 	GetWindowRect(GetWindow(), &windowRect);
-	if (GetCursorPos(&mousePos))
-	{
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-		{
-			RECT stackRect = m_arrpTableauStacks.at(0)->GetClickableArea();
+	RECT stackRect = _stack->GetClickableArea();
 
-			// Magic numbers for the borders
-			if (mousePos.x - windowRect.left - 10 >= stackRect.left &&
-				mousePos.x - windowRect.left - 5 <= stackRect.right &&
-				mousePos.y - windowRect.top - 35 >= stackRect.top &&
-				mousePos.y - windowRect.top + 15 <= stackRect.bottom)
-			{
-				m_arrpTableauStacks.at(0)->SetPos({ stackRect.left + mousePos.x - s_previousMousePos.x,
-					stackRect.top + mousePos.y - s_previousMousePos.y});
-			}
+	if (GetAsyncKeyState(VK_LBUTTON))
+	{
+		// Magic numbers for the borders
+		if (_mousePos.x - windowRect.left - 10 >= stackRect.left &&
+			_mousePos.x - windowRect.left - 5 <= stackRect.right &&
+			_mousePos.y - windowRect.top - 35 >= stackRect.top &&
+			_mousePos.y - windowRect.top + 15 <= stackRect.bottom)
+		{
+			_stack->SetPos({ stackRect.left + _mousePos.x - s_previousMousePos.x,
+				stackRect.top + _mousePos.y - s_previousMousePos.y });
 		}
 	}
-	s_previousMousePos = mousePos;
 	
 }
 
@@ -172,9 +181,12 @@ CGame::ExecuteOneFrame()
     float fDT = m_pClock->GetDeltaTick();
 
 	//TODO: Remove this temp if statment setting the top card to be revealed
-	if (m_arrpTableauStacks.at(0)->Top()->GetIsRevealed() == false)
+	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
-		m_arrpTableauStacks.at(0)->Top()->RevealCard();
+		if (m_arrpTableauStacks.at(i)->Top()->GetIsRevealed() == false)
+		{
+			m_arrpTableauStacks.at(i)->Top()->RevealCard();
+		}
 	}
 
     Process(fDT);

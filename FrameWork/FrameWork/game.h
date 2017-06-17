@@ -45,6 +45,9 @@ public:
     void Draw();
     void Process(float _fDeltaTick);
 
+	//TODO: Make generic for all stacks with the help of lance
+	void SelectStack(CTableauStack* _stack, POINT _mousePos);
+
     void ExecuteOneFrame();
 
     CBackBuffer* GetBackBuffer();
