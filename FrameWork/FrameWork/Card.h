@@ -27,11 +27,17 @@ public:
 	bool GetIsRevealed();
 	CSprite* GetSprite();
 
+	static int GetCardWidth();
+	static int GetCardHeight();
+
 private:
 	CSprite* m_pSprite;
 	ESUIT m_eSuit;
 	size_t m_cardNum;
 	bool m_bIsRevealed;
+
+	static const int s_kiCardWidth;
+	static const int s_kiCardHeight;
 
 	CCard(const CCard& _kr) = delete;
 	CCard& operator= (const CCard& _kr) = delete;

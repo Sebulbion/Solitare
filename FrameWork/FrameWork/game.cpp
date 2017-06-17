@@ -26,6 +26,8 @@
 
 // Static Variables
 CGame* CGame::s_pGame = 0;
+const int CGame::s_kiTableauStackSpacing = 50;
+const size_t CGame::s_kszNumTableauStacks = 7;
 
 // Static Function Prototypes
 
@@ -80,38 +82,30 @@ CGame::~CGame()
 bool
 CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 {
-    m_hApplicationInstance = _hInstance;
-    m_hMainWindow = _hWnd;
+	m_hApplicationInstance = _hInstance;
+	m_hMainWindow = _hWnd;
 
-    m_pClock = new CClock();
-    VALIDATE(m_pClock ->Initialise());
-    m_pClock->Process();
+	m_pClock = new CClock();
+	VALIDATE(m_pClock->Initialise());
+	m_pClock->Process();
 
-    m_pBackBuffer = new CBackBuffer();
-    VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
+	m_pBackBuffer = new CBackBuffer();
+	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
 	m_pStockStack = CStockStack::CreateFullDeck();
 	m_pStockStack->SetPos({ 0, 0 });
 
-	CCard* pCard = m_pStockStack->Top();
-	m_pStockStack->Pop();
-	m_arrpTableauStacks.at(0)->Push(pCard);
-	CCard* pCardTwo = m_pStockStack->Top();
-	m_pStockStack->Pop();
-	m_arrpTableauStacks.at(0)->Push(pCardTwo);
-	CCard* pCardThree = m_pStockStack->Top();
-	m_pStockStack->Pop();
-	m_arrpTableauStacks.at(0)->Push(pCardThree);
-	CCard* pCardFour = m_pStockStack->Top();
-	m_pStockStack->Pop();
-	m_arrpTableauStacks.at(0)->Push(pCardFour);
-	CCard* pCardFive = m_pStockStack->Top();
-	m_pStockStack->Pop();
-	m_arrpTableauStacks.at(0)->Push(pCardFive);
-	CCard* pCardSix = m_pStockStack->Top();
-	m_pStockStack->Pop();
-	m_arrpTableauStacks.at(0)->Push(pCardSix);
-	m_arrpTableauStacks.at(0)->SetPos({ 0, 0 });
+	for (int i = 0; i < s_kszNumTableauStacks; ++i)
+	{
+		for (int j = 0; j < i + 1; ++j)
+		{
+			CCard* pCard = m_pStockStack->Top();
+			m_pStockStack->Pop();
+			m_arrpTableauStacks.at(i)->Push(pCard);
+		}
+
+		m_arrpTableauStacks.at(i)->SetPos({ i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), 0 });
+	}
 
     return (true);
 }
@@ -120,11 +114,6 @@ void
 CGame::Draw()
 {
     m_pBackBuffer->Clear();
-
-	if (m_pStackGrabbed)
-	{
-		m_pStackGrabbed->Draw();
-	}
 	
 	m_pStockStack->Draw();
 	m_pWasteStack->Draw();
@@ -135,6 +124,11 @@ CGame::Draw()
 	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
 	{
 		rpTableauStack->Draw();
+	}
+
+	if (m_pStackGrabbed)
+	{
+		m_pStackGrabbed->Draw();
 	}
 
     m_pBackBuffer->Present();

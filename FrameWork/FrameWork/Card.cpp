@@ -1,6 +1,8 @@
 #include "Card.h"
 #include "resource.h"
 
+const int CCard::s_kiCardWidth = 168;
+const int CCard::s_kiCardHeight = 234;
 
 CCard::CCard(ESUIT _eSuite, size_t _cardNum, bool _bIsRevealed) :
 	m_pSprite(new CSprite()),
@@ -71,4 +73,14 @@ bool CCard::GetIsRevealed()
 CSprite * CCard::GetSprite()
 {
 	return m_pSprite;
+}
+
+int CCard::GetCardWidth()
+{
+	return s_kiCardWidth;
+}
+
+int CCard::GetCardHeight()
+{
+	return s_kiCardHeight;
 }
