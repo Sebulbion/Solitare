@@ -35,6 +35,11 @@ WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
         return(0);
 		break;
     }
+	case WM_LBUTTONDOWN:
+	{
+		return(0);
+		break;
+	}
 
     default:
 		break;
