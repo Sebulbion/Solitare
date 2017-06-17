@@ -21,13 +21,23 @@ bool CStockStack::TryPlace(IStack * pStack)
 	return false;
 }
 
-IStack * CStockStack::SplitStack()
+IStack * CStockStack::SplitStack(int _iIndex)
 {
 	return nullptr;
 }
 
 void CStockStack::Draw()
 {
+}
+
+RECT CStockStack::GetClickableArea()
+{
+	return RECT();
+}
+
+int CStockStack::ClickedCardIndex(POINT _poiMousePos)
+{
+	return 0;
 }
 
 CStockStack* CStockStack::CreateFullDeck()

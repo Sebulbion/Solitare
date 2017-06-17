@@ -30,7 +30,7 @@ const int CGame::s_kiTableauStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
 
 // Static Function Prototypes
-static POINT s_previousMousePos;
+static POINT s_poiPreviousMousePos;
 
 // Implementation
 
@@ -141,35 +141,37 @@ CGame::Process(float _fDeltaTick)
     // Process all the game’s logic here.
 	//Load a new sprite.
 
-	POINT mousePos;
-	GetCursorPos(&mousePos);
+	POINT poiMousePos;
+	GetCursorPos(&poiMousePos);
+	ScreenToClient(m_hMainWindow, &poiMousePos);
 
-	//TODO: Remove this temp movment
+	//TODO: Change this temp movment
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
-		SelectStack(m_arrpTableauStacks.at(i), mousePos);
+		SelectStack(m_arrpTableauStacks.at(i), poiMousePos);
 	}
 
-	s_previousMousePos = mousePos;
+	s_poiPreviousMousePos = poiMousePos;
 }
 
-void CGame::SelectStack(CTableauStack * _stack, POINT _mousePos)
+void CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
 {
-
-	RECT windowRect;
-	GetWindowRect(GetWindow(), &windowRect);
-	RECT stackRect = _stack->GetClickableArea();
+	RECT stackRect = _staStack->GetClickableArea();
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
-		// Magic numbers for the borders
-		if (_mousePos.x - windowRect.left - 10 >= stackRect.left &&
-			_mousePos.x - windowRect.left - 5 <= stackRect.right &&
-			_mousePos.y - windowRect.top - 35 >= stackRect.top &&
-			_mousePos.y - windowRect.top + 15 <= stackRect.bottom)
+		// Check if the mouse is in the box of a stack
+		if (_poiMousePos.x >= stackRect.left &&
+			_poiMousePos.x <= stackRect.right &&
+			_poiMousePos.y >= stackRect.top &&
+			_poiMousePos.y <= stackRect.bottom)
 		{
-			_stack->SetPos({ stackRect.left + _mousePos.x - s_previousMousePos.x,
-				stackRect.top + _mousePos.y - s_previousMousePos.y });
+			//IStack* test = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
+			/*test->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
+				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
+
+			_staStack->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
+				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });
 		}
 	}
 	

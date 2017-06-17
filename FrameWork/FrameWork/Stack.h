@@ -16,7 +16,7 @@ public:
 
 	// Split the stack into two separate stacks, 
 	// return the top stack
-	virtual IStack* SplitStack() = 0;
+	virtual IStack* SplitStack(int _iIndex) = 0;
 
 	// Draw the stack
 	virtual void Draw() = 0;
@@ -25,7 +25,10 @@ public:
 	virtual void SetPos(const TPosition&) = 0;
 
 	// Returns the box of the stack
-	//virtual RECT GetClickableArea() = 0;
+	virtual RECT GetClickableArea() = 0;
+
+	// Returns the index of the card you clicked in the stack
+	virtual int ClickedCardIndex(POINT _poiMousePos) = 0;
 	
 	// Get the position of the top left corner of the stack
 	TPosition GetPos() const;

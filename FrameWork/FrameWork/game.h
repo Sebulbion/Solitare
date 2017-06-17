@@ -46,7 +46,7 @@ public:
     void Process(float _fDeltaTick);
 
 	//TODO: Make generic for all stacks with the help of lance
-	void SelectStack(CTableauStack* _stack, POINT _mousePos);
+	void SelectStack(IStack* _staStack, POINT _poiMousePos);
 
     void ExecuteOneFrame();
 

@@ -17,9 +17,15 @@ bool CTableauStack::TryPlace(IStack * pStack)
 	return false;
 }
 
-IStack * CTableauStack::SplitStack()
+IStack * CTableauStack::SplitStack(int _iIndex)
 {
-	return nullptr;
+	CTableauStack* pstaStack = new CTableauStack();
+	auto it = m_listpCards.begin();
+	std::advance(it, _iIndex);
+
+	pstaStack->m_listpCards.splice(pstaStack->m_listpCards.begin(), m_listpCards, it);
+
+	return pstaStack;
 }
 
 void CTableauStack::Draw()
@@ -32,23 +38,35 @@ void CTableauStack::Draw()
 
 RECT CTableauStack::GetClickableArea()
 {
-	RECT rect;
+	RECT recRect;
 
-	rect.left = GetPos().x;
-	rect.top = GetPos().y;
+	recRect.left = GetPos().x;
+	recRect.top = GetPos().y;
 	if (m_listpCards.front()->GetIsRevealed())
 	{
-		rect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth() / 13;
-		rect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight() / 4;
+		recRect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth() / 13;
+		recRect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight() / 4;
 	}
 	else
 	{
-		rect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth();
-		rect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight();
+		recRect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth();
+		recRect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight();
 	}
-	rect.bottom += m_iCardOffset * m_listpCards.size() - 1;
+	recRect.bottom += m_iCardOffset * (m_listpCards.size() - 1);
 
-	return rect;
+	return recRect;
+}
+
+int CTableauStack::ClickedCardIndex(POINT _poiMousePos)
+{
+	for (int i = 0; i < (m_listpCards.size() - 1); ++i)
+	{
+		if (_poiMousePos.y <= GetPos().y + ((i + 1) * m_iCardOffset))
+		{
+			return m_listpCards.size() - i;
+		}
+	}
+	return (0);
 }
 
 void CTableauStack::SetPos(const TPosition & _krpos)
