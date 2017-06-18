@@ -14,6 +14,9 @@ public:
 	// This may fail due to stacking rules
 	virtual bool TryPlace(IStack* pStack) = 0;
 
+	// Plases a stack onto another stack
+	void Place(IStack* pStack);
+
 	// Split the stack into two separate stacks, 
 	// return the top stack
 	virtual IStack* SplitStack(int _iIndex) = 0;

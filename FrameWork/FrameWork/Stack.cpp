@@ -15,6 +15,11 @@ IStack::~IStack()
 	}
 }
 
+void IStack::Place(IStack * pStack)
+{
+	m_listpCards.splice(m_listpCards.begin(), pStack->m_listpCards, pStack->m_listpCards.begin(), pStack->m_listpCards.end());
+}
+
 TPosition IStack::GetPos() const
 {
 	return m_pos;

@@ -14,6 +14,27 @@ CTableauStack::~CTableauStack()
 
 bool CTableauStack::TryPlace(IStack * pStack)
 {
+	if (m_listpCards.size() == 0)
+	{
+		if (pStack->Top()->GetCardNum() == 12)
+		{
+			// Combine stacks
+			Place(pStack);
+			return true;
+		}
+	}
+	else
+	{
+		if ((*m_listpCards.begin())->GetCardNum() == pStack->Top()->GetCardNum() + 1)
+		{
+			if ((*m_listpCards.begin())->GetSuit() / 2 != pStack->Top()->GetSuit() / 2)
+			{
+				// Combine Stacks
+				Place(pStack);
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
