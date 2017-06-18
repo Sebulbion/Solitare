@@ -19,6 +19,7 @@
 #include "windows.h"
 
 // Local Includes
+#include "Position.h"
 
 // Types
 
@@ -34,28 +35,19 @@ public:
 
     bool Initialise(int _iResourceID, int _iMaskResourceID);
 
-    void Draw();
+    void Draw(const TPosition&);
 
 	// Draws a section of a spritesheet
-	void DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw);
+	void DrawSection(const TPosition&, int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw);
     void Process(float _fDeltaTick);
 
     int GetWidth() const;
     int GetHeight() const;
 
-    int GetX() const;
-    int GetY() const;
-    void SetX(int _i);
-    void SetY(int _i);
-
     void TranslateRelative(int _iX, int _iY);
     void TranslateAbsolute(int _iX, int _iY);
 
 protected:
-    //Center handle
-    int m_iX;
-    int m_iY;
-
     HBITMAP m_hSprite;
     HBITMAP m_hMask;
 

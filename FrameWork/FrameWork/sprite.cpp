@@ -31,8 +31,6 @@ int CSprite::s_iRefCount = 0;
 // Implementation
 
 CSprite::CSprite()
-: m_iX(0)
-, m_iY(0)
 {
     ++s_iRefCount;
 }
@@ -73,13 +71,13 @@ CSprite::Initialise(int _iSpriteResourceID, int _iMaskResourceID)
 }
 
 void
-CSprite::Draw()
+CSprite::Draw(const TPosition& _krpos)
 {
     int iW = GetWidth();
     int iH = GetHeight();
 
-    int iX = m_iX;
-    int iY = m_iY;
+    int iX = _krpos.x;
+    int iY = _krpos.y;
 
     CBackBuffer* pBackBuffer = CGame::GetInstance().GetBackBuffer();
 
@@ -94,13 +92,13 @@ CSprite::Draw()
     SelectObject(s_hSharedSpriteDC, hOldObj);
 }
 
-void CSprite::DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw,int _iYFrameToDraw)
+void CSprite::DrawSection(const TPosition& _krpos, int _iXFrames, int _iYFrames, int _iXFrameToDraw,int _iYFrameToDraw)
 {
 	int iW = GetWidth() / _iXFrames;
 	int iH = GetHeight() / _iYFrames;
 
-	int iX = m_iX;
-	int iY = m_iY;
+	int iX = _krpos.x;
+	int iY = _krpos.y;
 
 	CBackBuffer* pBackBuffer = CGame::GetInstance().GetBackBuffer();
 
@@ -147,42 +145,4 @@ int
 CSprite::GetHeight() const
 {
     return (m_bitmapSprite.bmHeight);
-}
-
-int 
-CSprite::GetX() const
-{
-    return (m_iX);
-}
-
-int 
-CSprite::GetY() const
-{
-    return (m_iY);
-}
-
-void 
-CSprite::SetX(int _i)
-{
-    m_iX = _i;
-}
-
-void 
-CSprite::SetY(int _i)
-{
-    m_iY = _i;
-}
-
-void 
-CSprite::TranslateRelative(int _iX, int _iY)
-{
-    m_iX += _iX;
-    m_iY += _iY;
-}
-
-void 
-CSprite::TranslateAbsolute(int _iX, int _iY)
-{
-    m_iX = _iX;
-    m_iY = _iY;
 }

@@ -94,7 +94,7 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
 	m_pStockStack = CStockStack::CreateFullDeck();
-	m_pStockStack->SetPos({ 0, 0 });
+	m_pStockStack->SetPos({ s_kiTableauStackSpacing, 0 });
 
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
