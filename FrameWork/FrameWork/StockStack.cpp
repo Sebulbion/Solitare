@@ -7,7 +7,8 @@
 #include "Card.h"
 
 
-CStockStack::CStockStack()
+CStockStack::CStockStack() :
+	IStack()
 {
 }
 
@@ -32,11 +33,6 @@ void CStockStack::Draw()
 	{
 		m_listpCards.front()->Draw();
 	}
-}
-
-RECT CStockStack::GetClickableArea()
-{
-	return RECT();
 }
 
 int CStockStack::ClickedCardIndex(POINT _poiMousePos)

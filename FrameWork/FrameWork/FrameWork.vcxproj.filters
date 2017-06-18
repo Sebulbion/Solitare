@@ -16,6 +16,9 @@
     <Filter Include="Header Files\Stacks">
       <UniqueIdentifier>{2d0fde78-b0e1-4cd5-b902-969b96aa6cae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Stacks">
+      <UniqueIdentifier>{3ec371e2-1a8d-42da-85a9-3622c7b8c78d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp">
@@ -36,20 +39,20 @@
     <ClCompile Include="Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StockStack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WasteStack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FoundationStack.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Stacks</Filter>
+    </ClCompile>
+    <ClCompile Include="StockStack.cpp">
+      <Filter>Source Files\Stacks</Filter>
     </ClCompile>
     <ClCompile Include="TableauStack.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Stacks</Filter>
+    </ClCompile>
+    <ClCompile Include="WasteStack.cpp">
+      <Filter>Source Files\Stacks</Filter>
     </ClCompile>
     <ClCompile Include="Stack.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Stacks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

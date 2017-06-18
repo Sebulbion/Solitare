@@ -17,6 +17,7 @@
 
 // Library Includes
 #include <strstream>
+#include <Windows.h>
 
 // Local Includes
 
@@ -34,6 +35,21 @@ std::string ToString(const T& _value)
     std::strstream theStream;
     theStream << _value << std::ends;
     return (theStream.str());
+}
+
+inline bool InsideRect(const POINT& _krpoi, const RECT& _krrect)
+{
+	if (_krpoi.x >= _krrect.left &&
+		_krpoi.x <= _krrect.right &&
+		_krpoi.y >= _krrect.top &&
+		_krpoi.y <= _krrect.bottom)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 #endif    // __UTILS_H__

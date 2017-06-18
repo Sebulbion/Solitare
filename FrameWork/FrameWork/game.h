@@ -78,10 +78,11 @@ private:
 
 	static const int s_kiTableauStackSpacing;
 	static const size_t s_kszNumTableauStacks;
+	static const size_t s_kszWastSize;
 
 public:
-	static bool s_bClicked;
-	static bool s_bClickReleased;
+	bool m_bClicked;
+	bool m_bClickReleased;
 
 protected:
     CClock* m_pClock;
