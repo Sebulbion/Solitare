@@ -41,22 +41,10 @@ bool CTableauStack::TryPlace(IStack * pStack)
 
 IStack * CTableauStack::SplitStack(int _iIndex)
 {
-	CTableauStack* pStack = new CTableauStack();
-	auto it = m_listpCards.begin();
-	std::advance(it, _iIndex);
+	IStack* pStack = new CTableauStack();
+	SplitStackHelper(_iIndex, pStack);
 
-	if ((*it)->GetIsRevealed() == true)
-	{
-		it++;
-		pStack->m_listpCards.splice(pStack->m_listpCards.begin(), m_listpCards, m_listpCards.begin(), it);
-		pStack->SetPos(TPosition{ GetPos().x, GetPos().y + (m_iCardOffset * (int)m_listpCards.size()) });
-
-		return pStack;
-	}
-	else
-	{
-		return nullptr;
-	}
+	return pStack;
 }
 
 int CTableauStack::ClickedCardIndex(POINT _poiMousePos)

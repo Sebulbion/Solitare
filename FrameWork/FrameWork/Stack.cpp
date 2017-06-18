@@ -9,6 +9,24 @@ IStack::IStack() :
 {
 }
 
+void IStack::SplitStackHelper(int _iIndex, IStack *& _pStack)
+{
+	auto it = m_listpCards.begin();
+	std::advance(it, _iIndex);
+
+	if ((*it)->GetIsRevealed() == true)
+	{
+		it++;
+		_pStack->m_listpCards.splice(_pStack->m_listpCards.begin(), m_listpCards, m_listpCards.begin(), it);
+		_pStack->SetPos(_pStack->Bottom()->GetPos());
+	}
+	else
+	{
+		delete _pStack;
+		_pStack = nullptr;
+	}
+}
+
 
 IStack::~IStack()
 {
@@ -89,4 +107,9 @@ CCard *& IStack::Bottom()
 void IStack::Pop()
 {
 	m_listpCards.pop_front();
+}
+
+bool IStack::Empty()
+{
+	return m_listpCards.empty();
 }

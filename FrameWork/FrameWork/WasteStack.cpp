@@ -1,6 +1,6 @@
 #include "WasteStack.h"
 #include "Card.h"
-
+#include "utils.h"
 
 CWasteStack::CWasteStack() :
 	IStack(),
@@ -20,11 +20,21 @@ bool CWasteStack::TryPlace(IStack * pStack)
 
 IStack * CWasteStack::SplitStack(int _iIndex)
 {
-	return nullptr;
+	IStack* pStack = new CWasteStack();
+	SplitStackHelper(_iIndex, pStack);
+
+	return pStack;
 }
 
 int CWasteStack::ClickedCardIndex(POINT _poiMousePos)
 {
+	for (int i = 0; i < (m_listpCards.size() - 1); ++i)
+	{
+		if (_poiMousePos.x <= GetPos().x + ((i + 1) * m_iCardOffset))
+		{
+			return m_listpCards.size() - 1 - i;
+		}
+	}
 	return 0;
 }
 

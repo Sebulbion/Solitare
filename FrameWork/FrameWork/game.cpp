@@ -169,6 +169,10 @@ CGame::Process(float _fDeltaTick)
 	{
 		SelectStack(m_arrpTableauStacks.at(i), poiMousePos);
 	}
+	if (!m_pWasteStack->Empty())
+	{
+		SelectStack(m_pWasteStack, poiMousePos);
+	}
 
 	if (m_pStackGrabbed != nullptr)
 	{

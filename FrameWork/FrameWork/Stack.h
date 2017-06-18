@@ -48,11 +48,16 @@ public:
 	CCard*& Top();
 	CCard*& Bottom();
 	void Pop();
+	bool Empty();
 
 protected:
 	IStack();
 	IStack(const IStack& _kr) = delete;
 	IStack& operator= (const IStack& _kr) = delete;
+
+	// A Helper function for splitting stacks
+	// Returns the top stack into the supplied stack pointer
+	void SplitStackHelper(int _iIndex, IStack*& _pStack);
 
 	// The dimensions of the stack when laid out on the screen
 	int m_iWidth;
