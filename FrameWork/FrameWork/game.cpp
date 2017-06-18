@@ -19,6 +19,7 @@
 #include "BackBuffer.h"
 #include "utils.h"
 #include "sprite.h"
+#include "Card.h"
 
 
 // This Include
@@ -28,8 +29,7 @@
 CGame* CGame::s_pGame = 0;
 const int CGame::s_kiTableauStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
-bool CGame::s_bClicked = false;
-bool CGame::s_bClickReleased = false;
+const size_t CGame::s_kszWastSize = 3;
 
 // Static Function Prototypes
 static POINT s_poiPreviousMousePos;
@@ -44,6 +44,8 @@ CGame::CGame()
 , m_pStackGrabbed(nullptr)
 , m_pStockStack(new CStockStack)
 , m_pWasteStack(new CWasteStack)
+, m_bClicked(false)
+, m_bClickReleased(false)
 {
 	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
 	{
@@ -98,6 +100,8 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	m_pStockStack = CStockStack::CreateFullDeck();
 	m_pStockStack->SetPos({ s_kiTableauStackSpacing, 0 });
 
+	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiTableauStackSpacing, 0 });
+
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
 		for (int j = 0; j < i + 1; ++j)
@@ -147,6 +151,19 @@ CGame::Process(float _fDeltaTick)
 	GetCursorPos(&poiMousePos);
 	ScreenToClient(m_hMainWindow, &poiMousePos);
 
+	if (m_bClicked && InsideRect(poiMousePos, m_pStockStack->GetClickableArea()))
+	{
+		for (size_t i = 0; i < s_kszWastSize; ++i)
+		{
+			CCard* pCard = m_pStockStack->Top();
+			m_pStockStack->Pop();
+			m_pWasteStack->Push(pCard);
+			pCard->RevealCard();
+
+			m_bClicked = false;
+		}
+	}
+
 	//TODO: Change this temp movment
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
@@ -173,7 +190,7 @@ void CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
 			_poiMousePos.y >= stackRect.top &&
 			_poiMousePos.y <= stackRect.bottom)
 		{
-			if (s_bClicked == true)
+			if (m_bClicked == true)
 			{
 				m_pStackGrabbed = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
 			}
@@ -183,7 +200,7 @@ void CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
 			/*_staStack->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
 				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
 
-			s_bClicked = false;
+			m_bClicked = false;
 		}
 	}
 	

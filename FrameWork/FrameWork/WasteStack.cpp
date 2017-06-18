@@ -1,8 +1,10 @@
 #include "WasteStack.h"
+#include "Card.h"
 
 
-
-CWasteStack::CWasteStack()
+CWasteStack::CWasteStack() :
+	IStack(),
+	m_iCardOffset(40)
 {
 }
 
@@ -21,15 +23,6 @@ IStack * CWasteStack::SplitStack(int _iIndex)
 	return nullptr;
 }
 
-void CWasteStack::Draw()
-{
-}
-
-RECT CWasteStack::GetClickableArea()
-{
-	return RECT();
-}
-
 int CWasteStack::ClickedCardIndex(POINT _poiMousePos)
 {
 	return 0;
@@ -38,4 +31,10 @@ int CWasteStack::ClickedCardIndex(POINT _poiMousePos)
 void CWasteStack::SetPos(const TPosition & _krpos)
 {
 	m_pos = _krpos;
+	int i = 0;
+	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
+	{
+		(*it)->SetPos({ m_pos.x + i * m_iCardOffset, m_pos.y });
+		++i;
+	}
 }

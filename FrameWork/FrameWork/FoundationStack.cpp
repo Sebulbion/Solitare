@@ -2,7 +2,8 @@
 
 
 
-CFoundationStack::CFoundationStack()
+CFoundationStack::CFoundationStack() :
+	IStack()
 {
 }
 
@@ -19,15 +20,6 @@ bool CFoundationStack::TryPlace(IStack * pStack)
 IStack * CFoundationStack::SplitStack(int _iIndex)
 {
 	return nullptr;
-}
-
-void CFoundationStack::Draw()
-{
-}
-
-RECT CFoundationStack::GetClickableArea()
-{
-	return RECT();
 }
 
 int CFoundationStack::ClickedCardIndex(POINT _poiMousePos)

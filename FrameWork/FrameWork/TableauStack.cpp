@@ -1,8 +1,9 @@
 #include "TableauStack.h"
-
+#include "Card.h"
 
 
 CTableauStack::CTableauStack():
+	IStack(),
 	m_iCardOffset(40)
 {
 }
@@ -56,35 +57,6 @@ IStack * CTableauStack::SplitStack(int _iIndex)
 	{
 		return nullptr;
 	}
-}
-
-void CTableauStack::Draw()
-{
-	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
-	{
-		(*it)->Draw();
-	}
-}
-
-RECT CTableauStack::GetClickableArea()
-{
-	RECT recRect;
-
-	recRect.left = GetPos().x;
-	recRect.top = GetPos().y;
-	if (m_listpCards.front()->GetIsRevealed())
-	{
-		recRect.right = GetPos().x + CCard::GetCardWidth();
-		recRect.bottom = GetPos().y + CCard::GetCardHeight();
-	}
-	else
-	{
-		recRect.right = GetPos().x + CCard::GetCardWidth();
-		recRect.bottom = GetPos().y + CCard::GetCardHeight();
-	}
-	recRect.bottom += m_iCardOffset * (m_listpCards.size() - 1);
-
-	return recRect;
 }
 
 int CTableauStack::ClickedCardIndex(POINT _poiMousePos)

@@ -37,13 +37,13 @@ WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
     }
 	case WM_LBUTTONDOWN:
 	{
-		CGame::GetInstance().s_bClicked = true;
+		CGame::GetInstance().m_bClicked = true;
 		return(0);
 		break;
 	}
 	case WM_LBUTTONUP:
 	{
-		CGame::GetInstance().s_bClickReleased = true;
+		CGame::GetInstance().m_bClickReleased = true;
 		return(0);
 		break;
 	}

@@ -1,9 +1,11 @@
 #pragma once
 
+#include <Windows.h>
 #include <list>
 
 #include "Position.h"
-#include "Card.h"
+
+class CCard;
 
 class IStack
 {
@@ -22,13 +24,13 @@ public:
 	virtual IStack* SplitStack(int _iIndex) = 0;
 
 	// Draw the stack
-	virtual void Draw() = 0;
+	virtual void Draw();
 
 	// Set the position of the top left corner of the stack
 	virtual void SetPos(const TPosition&) = 0;
 
 	// Returns the box of the stack
-	virtual RECT GetClickableArea() = 0;
+	virtual RECT GetClickableArea();
 
 	// Returns the index of the card you clicked in the stack
 	virtual int ClickedCardIndex(POINT _poiMousePos) = 0;
@@ -37,10 +39,10 @@ public:
 	TPosition GetPos() const;
 
 	// Get the width of the stack as laid out on the screen
-	float GetWidth() const;
+	int GetWidth() const;
 
 	// Get the height of the stack as laid out on the screen
-	float GetHeight() const;
+	int GetHeight() const;
 
 	void Push(CCard* const &);
 	CCard*& Top();
@@ -52,8 +54,8 @@ protected:
 	IStack& operator= (const IStack& _kr) = delete;
 
 	// The dimensions of the stack when laid out on the screen
-	float m_fWidth;
-	float m_fHeight;
+	int m_iWidth;
+	int m_iHeight;
 
 	// Top left corner position of the stack
 	TPosition m_pos;
