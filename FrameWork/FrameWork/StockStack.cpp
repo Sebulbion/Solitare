@@ -28,6 +28,10 @@ IStack * CStockStack::SplitStack(int _iIndex)
 
 void CStockStack::Draw()
 {
+	if (m_listpCards.size() > 0)
+	{
+		m_listpCards.front()->Draw();
+	}
 }
 
 RECT CStockStack::GetClickableArea()
@@ -69,4 +73,8 @@ CStockStack* CStockStack::CreateFullDeck()
 void CStockStack::SetPos(const TPosition & _krpos)
 {
 	m_pos = _krpos;
+	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
+	{
+		(*it)->SetPos(m_pos);
+	}
 }

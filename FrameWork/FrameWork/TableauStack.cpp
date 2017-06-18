@@ -41,7 +41,7 @@ void CTableauStack::Draw()
 {
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
-		(*it)->DrawSection(13, 4, (*it)->GetCardNum(), (*it)->GetSuit());
+		(*it)->Draw();
 	}
 }
 
@@ -53,13 +53,13 @@ RECT CTableauStack::GetClickableArea()
 	recRect.top = GetPos().y;
 	if (m_listpCards.front()->GetIsRevealed())
 	{
-		recRect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth() / 13;
-		recRect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight() / 4;
+		recRect.right = GetPos().x + CCard::GetCardWidth();
+		recRect.bottom = GetPos().y + CCard::GetCardHeight();
 	}
 	else
 	{
-		recRect.right = GetPos().x + m_listpCards.front()->GetSprite()->GetWidth();
-		recRect.bottom = GetPos().y + m_listpCards.front()->GetSprite()->GetHeight();
+		recRect.right = GetPos().x + CCard::GetCardWidth();
+		recRect.bottom = GetPos().y + CCard::GetCardHeight();
 	}
 	recRect.bottom += m_iCardOffset * (m_listpCards.size() - 1);
 

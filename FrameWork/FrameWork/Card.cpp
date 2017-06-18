@@ -5,25 +5,21 @@ const int CCard::s_kiCardWidth = 168;
 const int CCard::s_kiCardHeight = 234;
 
 CCard::CCard(ESUIT _eSuite, size_t _cardNum, bool _bIsRevealed) :
-	m_pSprite(new CSprite()),
+	m_pSpriteCardAtlas(new CSprite()),
+	m_pSpriteCardBack(new CSprite()),
 	m_eSuit(_eSuite),
 	m_cardNum(_cardNum),
 	m_bIsRevealed(_bIsRevealed)
 {
-	if (m_bIsRevealed)
-	{
-		m_pSprite->Initialise(IDB_CARDATLAS, IDB_BITMAP2);
-	}
-	else
-	{
-		m_pSprite->Initialise(IDB_BITMAP3, IDB_BITMAP1);
-	}
+	m_pSpriteCardAtlas->Initialise(IDB_CARDATLAS, IDB_BITMAP2);
+	m_pSpriteCardBack->Initialise(IDB_BITMAP3, IDB_BITMAP1);
 }
 
 
 CCard::~CCard()
 {
-	delete m_pSprite;
+	delete m_pSpriteCardAtlas;
+	delete m_pSpriteCardBack;
 }
 
 int CCard::GetSuit()
@@ -36,43 +32,36 @@ size_t CCard::GetCardNum()
 	return m_cardNum;
 }
 
-void CCard::DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw)
+void CCard::Draw()
 {
 	if (m_bIsRevealed)
 	{
-		m_pSprite->DrawSection(_iXFrames, _iYFrames, _iXFrameToDraw, _iYFrameToDraw);
+		m_pSpriteCardAtlas->DrawSection(m_pos, 13, 4, m_cardNum, static_cast<int>(m_eSuit));
 	}
 	else
 	{
-		m_pSprite->Draw();
+		m_pSpriteCardBack->Draw(m_pos);
 	}
 }
 
 void CCard::SetPos(const TPosition& _krpos)
 {
-	m_pSprite->SetX(_krpos.x);
-	m_pSprite->SetY(_krpos.y);
+	m_pos = _krpos;
 }
 
 TPosition CCard::GetPos()
 {
-	return{ m_pSprite->GetX(), m_pSprite->GetY() };
+	return m_pos;
 }
 
 void CCard::RevealCard()
 {
 	m_bIsRevealed = true;
-	m_pSprite->Initialise(IDB_CARDATLAS, IDB_BITMAP2);
 }
 
 bool CCard::GetIsRevealed()
 {
 	return m_bIsRevealed;
-}
-
-CSprite * CCard::GetSprite()
-{
-	return m_pSprite;
 }
 
 int CCard::GetCardWidth()

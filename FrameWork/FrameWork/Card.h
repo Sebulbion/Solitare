@@ -20,21 +20,23 @@ public:
 
 	int GetSuit();
 	size_t GetCardNum();
-	void DrawSection(int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw);
+	void Draw();
 	void SetPos(const TPosition&);
 	TPosition GetPos();
 	void RevealCard();
 	bool GetIsRevealed();
-	CSprite* GetSprite();
 
 	static int GetCardWidth();
 	static int GetCardHeight();
 
 private:
-	CSprite* m_pSprite;
+	CSprite* m_pSpriteCardAtlas;
+	CSprite* m_pSpriteCardBack;
 	ESUIT m_eSuit;
 	size_t m_cardNum;
 	bool m_bIsRevealed;
+
+	TPosition m_pos;
 
 	static const int s_kiCardWidth;
 	static const int s_kiCardHeight;
