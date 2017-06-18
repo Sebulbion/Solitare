@@ -34,7 +34,14 @@ void CWasteStack::SetPos(const TPosition & _krpos)
 	int i = 0;
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
-		(*it)->SetPos({ m_pos.x + i * m_iCardOffset, m_pos.y });
+		(*it)->SetPos({ m_pos.x, m_pos.y });
 		++i;
+	}
+
+	i = 2;
+	for (auto it = m_listpCards.begin(); it != m_listpCards.end() && i >= 0; it++)
+	{
+		(*it)->SetPos({ m_pos.x + i * m_iCardOffset, m_pos.y });
+		--i;
 	}
 }
