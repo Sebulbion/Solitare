@@ -18,6 +18,7 @@
 // Library Includes
 #include <windows.h>
 #include <array>
+#include <vector>
 
 // Local Includes
 #include "clock.h"
@@ -49,7 +50,7 @@ public:
 	void MoveGrabedStack(POINT _poiMousePos);
 
 	// Returns a stack that the input stack collides with
-	IStack* ColidingStack(IStack* pStack);
+	std::vector<IStack*> ColidingStack(IStack* pStack);
 
     void ExecuteOneFrame();
 

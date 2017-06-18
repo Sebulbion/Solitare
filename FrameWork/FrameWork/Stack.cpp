@@ -48,6 +48,11 @@ RECT IStack::GetClickableArea()
 	return recRect;
 }
 
+void IStack::Place(IStack * pStack)
+{
+	m_listpCards.splice(m_listpCards.begin(), pStack->m_listpCards, pStack->m_listpCards.begin(), pStack->m_listpCards.end());
+}
+
 TPosition IStack::GetPos() const
 {
 	return m_pos;
@@ -74,6 +79,11 @@ void IStack::Push(CCard* const & _krpCard)
 CCard*& IStack::Top()
 {
 	return m_listpCards.front();
+}
+
+CCard *& IStack::Bottom()
+{
+	return m_listpCards.back();
 }
 
 void IStack::Pop()

@@ -211,17 +211,36 @@ void CGame::MoveGrabedStack(POINT _poiMousePos)
 	m_pStackGrabbed->SetPos({ m_pStackGrabbed->GetPos().x + _poiMousePos.x - s_poiPreviousMousePos.x,
 		m_pStackGrabbed->GetPos().y + _poiMousePos.y - s_poiPreviousMousePos.y });
 
-	/*if (s_bClickReleased == true)
+	//TODO: Create a PlaceGrabbedStack function for this 
+	//V
+	if (m_bClickReleased == true)
 	{
-		m_pStackGrabbed->SetPos(ColidingStack(m_pStackGrabbed)->GetPos());
-		m_pStackGrabbed = nullptr;
-	}*/
+		std::vector<IStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
+		bool bCanPlace = false;
+
+		for (IStack* pStack : vecpColidedStack)
+		{
+			bCanPlace = pStack->TryPlace(m_pStackGrabbed) || bCanPlace;
+			pStack->SetPos(pStack->GetPos());
+
+			if (bCanPlace == true)
+			{
+				break;
+			}
+		}
+		if (bCanPlace == false)
+		{
+			// Return m_pStackGrabbed to its old stack
+		}
+	}
 
 	m_bClickReleased = false;
+	//^
 }
 
-IStack * CGame::ColidingStack(IStack * pStack)
+std::vector<IStack *> CGame::ColidingStack(IStack * pStack)
 {
+	std::vector<IStack *> vecpCollidingStacks;
 	RECT otherStackRect;
 	RECT stackRect = pStack->GetClickableArea();
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
@@ -229,12 +248,12 @@ IStack * CGame::ColidingStack(IStack * pStack)
 		otherStackRect = m_arrpTableauStacks.at(i)->GetClickableArea();
 
 		if (stackRect.left < otherStackRect.right && stackRect.right > otherStackRect.left &&
-			stackRect.top > otherStackRect.bottom && stackRect.bottom < otherStackRect.top)
+			stackRect.top < otherStackRect.bottom && stackRect.bottom > otherStackRect.top)
 		{
-			return m_arrpTableauStacks.at(i);
+			vecpCollidingStacks.push_back(m_arrpTableauStacks.at(i));
 		}
 	}
-	return nullptr;
+	return vecpCollidingStacks;
 }
 
 void
