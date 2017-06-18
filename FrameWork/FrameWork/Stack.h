@@ -46,6 +46,7 @@ public:
 
 	void Push(CCard* const &);
 	CCard*& Top();
+	CCard*& Bottom();
 	void Pop();
 
 protected:

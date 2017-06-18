@@ -81,6 +81,11 @@ CCard*& IStack::Top()
 	return m_listpCards.front();
 }
 
+CCard *& IStack::Bottom()
+{
+	return m_listpCards.back();
+}
+
 void IStack::Pop()
 {
 	m_listpCards.pop_front();

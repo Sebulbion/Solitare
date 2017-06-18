@@ -213,7 +213,7 @@ void CGame::MoveGrabedStack(POINT _poiMousePos)
 
 	//TODO: Create a PlaceGrabbedStack function for this 
 	//V
-	if (s_bClickReleased == true)
+	if (m_bClickReleased == true)
 	{
 		std::vector<IStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
 		bool bCanPlace = false;
@@ -234,7 +234,7 @@ void CGame::MoveGrabedStack(POINT _poiMousePos)
 		}
 	}
 
-	s_bClickReleased = false;
+	m_bClickReleased = false;
 	//^
 }
 
