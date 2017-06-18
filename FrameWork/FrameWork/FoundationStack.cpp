@@ -27,7 +27,6 @@ int CFoundationStack::ClickedCardIndex(POINT _poiMousePos)
 	return 0;
 }
 
-void CFoundationStack::SetPos(const TPosition & _krpos)
+void CFoundationStack::NotifyChange()
 {
-	m_pos = _krpos;
 }

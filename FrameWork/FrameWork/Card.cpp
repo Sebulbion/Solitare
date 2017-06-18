@@ -59,6 +59,11 @@ void CCard::RevealCard()
 	m_bIsRevealed = true;
 }
 
+void CCard::HideCard()
+{
+	m_bIsRevealed = false;
+}
+
 bool CCard::GetIsRevealed()
 {
 	return m_bIsRevealed;

@@ -24,6 +24,7 @@ public:
 	void SetPos(const TPosition&);
 	TPosition GetPos();
 	void RevealCard();
+	void HideCard();
 	bool GetIsRevealed();
 
 	static int GetCardWidth();

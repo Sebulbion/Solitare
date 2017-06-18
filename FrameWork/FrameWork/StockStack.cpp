@@ -66,9 +66,8 @@ CStockStack* CStockStack::CreateFullDeck()
 	return stockStack;
 }
 
-void CStockStack::SetPos(const TPosition & _krpos)
+void CStockStack::NotifyChange()
 {
-	m_pos = _krpos;
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
 		(*it)->SetPos(m_pos);

@@ -12,9 +12,9 @@ public:
 	// Inherited via IStack
 	virtual bool TryPlace(IStack * pStack) override;
 	virtual IStack * SplitStack(int _iIndex) override;
-	virtual void SetPos(const TPosition &) override;
 	virtual void Draw() override;
 	virtual int ClickedCardIndex(POINT _poiMousePos) override;
+	virtual void NotifyChange() override;
 
 	// Create a randomly shuffled deck of 52 cards
 	static CStockStack* CreateFullDeck();

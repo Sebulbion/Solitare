@@ -59,13 +59,18 @@ int CTableauStack::ClickedCardIndex(POINT _poiMousePos)
 	return 0;
 }
 
-void CTableauStack::SetPos(const TPosition & _krpos)
+void CTableauStack::NotifyChange()
 {
-	m_pos = _krpos;
 	int i = 0;
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
 		(*it)->SetPos({ m_pos.x, m_pos.y + i * m_iCardOffset });
 		++i;
+	}
+
+	// Keep top cards revealed
+	if (!m_listpCards.empty())
+	{
+		m_listpCards.front()->RevealCard();
 	}
 }

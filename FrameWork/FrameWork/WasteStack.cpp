@@ -2,6 +2,8 @@
 #include "Card.h"
 #include "utils.h"
 
+const size_t CWasteStack::s_kszNumWasteRevealed = 3;
+
 CWasteStack::CWasteStack() :
 	IStack(),
 	m_iCardOffset(40)
@@ -28,19 +30,18 @@ IStack * CWasteStack::SplitStack(int _iIndex)
 
 int CWasteStack::ClickedCardIndex(POINT _poiMousePos)
 {
-	for (int i = 0; i < (m_listpCards.size() - 1); ++i)
+	for (int i = 0; i < s_kszNumWasteRevealed - 1; ++i)
 	{
 		if (_poiMousePos.x <= GetPos().x + ((i + 1) * m_iCardOffset))
 		{
-			return m_listpCards.size() - 1 - i;
+			return s_kszNumWasteRevealed - 1 - i;
 		}
 	}
 	return 0;
 }
 
-void CWasteStack::SetPos(const TPosition & _krpos)
+void CWasteStack::NotifyChange()
 {
-	m_pos = _krpos;
 	int i = 0;
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{

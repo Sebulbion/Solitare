@@ -29,10 +29,10 @@
 CGame* CGame::s_pGame = 0;
 const int CGame::s_kiTableauStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
-const size_t CGame::s_kszWastSize = 3;
 
 // Static Function Prototypes
 static POINT s_poiPreviousMousePos;
+static POINT s_poiMousePos;
 
 // Implementation
 
@@ -44,8 +44,8 @@ CGame::CGame()
 , m_pStackGrabbed(nullptr)
 , m_pStockStack(new CStockStack)
 , m_pWasteStack(new CWasteStack)
-, m_bClicked(false)
-, m_bClickReleased(false)
+, m_bClickToHandle(false)
+, m_bClickReleaseToHandle(false)
 {
 	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
 	{
@@ -97,21 +97,23 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
+	// Init and place stacks
 	m_pStockStack = CStockStack::CreateFullDeck();
 	m_pStockStack->SetPos({ s_kiTableauStackSpacing, 0 });
-
 	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiTableauStackSpacing, 0 });
-
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
+		m_arrpTableauStacks.at(i)->SetPos({ s_kiTableauStackSpacing + i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), CCard::GetCardHeight() + s_kiTableauStackSpacing });
+
 		for (int j = 0; j < i + 1; ++j)
 		{
 			CCard* pCard = m_pStockStack->Top();
 			m_pStockStack->Pop();
 			m_arrpTableauStacks.at(i)->Push(pCard);
+			pCard->HideCard();
 		}
 
-		m_arrpTableauStacks.at(i)->SetPos({ s_kiTableauStackSpacing + i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), CCard::GetCardHeight() + s_kiTableauStackSpacing });
+		m_arrpTableauStacks.at(i)->Top()->RevealCard();
 	}
 
     return (true);
@@ -147,109 +149,151 @@ CGame::Process(float _fDeltaTick)
     // Process all the game’s logic here.
 	//Load a new sprite.
 
-	POINT poiMousePos;
-	GetCursorPos(&poiMousePos);
-	ScreenToClient(m_hMainWindow, &poiMousePos);
+	GetCursorPos(&s_poiMousePos);
+	ScreenToClient(m_hMainWindow, &s_poiMousePos);
 
-	if (m_bClicked && InsideRect(poiMousePos, m_pStockStack->GetClickableArea()))
+	if (m_bClickToHandle)
 	{
-		for (size_t i = 0; i < s_kszWastSize; ++i)
+		HandleClick();
+	}
+
+	// Handle movement of grabbed stack
+	if (m_pStackGrabbed != nullptr)
+	{
+		MoveGrabbedStack(s_poiMousePos);
+	}
+
+	// Handle click release
+	if (m_bClickReleaseToHandle)
+	{
+		HandleClickRelease();
+	}
+
+	s_poiPreviousMousePos = s_poiMousePos;
+}
+
+bool CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
+{
+	// Make sure there is nothing already grabbed
+	if (m_pStackGrabbed != nullptr)
+	{
+		PlaceGrabbedStack(_poiMousePos);
+	}
+
+	RECT stackBoundingBox = _staStack->GetBoundingBox();
+
+	// Check if the mouse is in the bounding box of a stack
+	if (InsideRect(_poiMousePos, stackBoundingBox))
+	{
+		m_pStackGrabbed = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
+		m_pStackGrabbedFromStack = _staStack;
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+	/*test->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
+		stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
+
+	/*_staStack->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
+		stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
+}
+
+void CGame::MoveGrabbedStack(POINT _poiMousePos)
+{
+	m_pStackGrabbed->SetPos({ m_pStackGrabbed->GetPos().x + _poiMousePos.x - s_poiPreviousMousePos.x,
+	                          m_pStackGrabbed->GetPos().y + _poiMousePos.y - s_poiPreviousMousePos.y });
+}
+
+void CGame::PlaceGrabbedStack(POINT _poiMousePos)
+{
+	std::vector<IStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
+	bool bStackPlaced = false;
+
+	for (IStack* pStack : vecpColidedStack)
+	{
+		// Trying placing the stack
+		bStackPlaced = pStack->TryPlace(m_pStackGrabbed);
+
+		if (bStackPlaced == true)
+		{
+			// Notify old stack of change
+			m_pStackGrabbedFromStack->NotifyChange();
+
+			pStack->SetPos(pStack->GetPos());
+			break;
+		}
+	}
+	if (bStackPlaced == false)
+	{
+		// Return m_pStackGrabbed to its old stack
+		m_pStackGrabbedFromStack->Place(m_pStackGrabbed);
+		m_pStackGrabbedFromStack->SetPos(m_pStackGrabbedFromStack->GetPos());
+	}
+
+	delete m_pStackGrabbed;
+	m_pStackGrabbed = nullptr;
+	m_pStackGrabbedFromStack = nullptr;
+}
+
+void CGame::HandleClick()
+{
+	// Put cards from stock into waste when the player clicks the stock
+	if (InsideRect(s_poiMousePos, m_pStockStack->GetBoundingBox()))
+	{
+		for (size_t i = 0; i < CWasteStack::s_kszNumWasteRevealed; ++i)
 		{
 			CCard* pCard = m_pStockStack->Top();
 			m_pStockStack->Pop();
 			m_pWasteStack->Push(pCard);
 			pCard->RevealCard();
-
-			m_bClicked = false;
 		}
+
+		m_bClickToHandle = false;
+		return;
 	}
 
-	//TODO: Change this temp movment
+	// Handle clicking on grabable cards
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
-		SelectStack(m_arrpTableauStacks.at(i), poiMousePos);
+		if (!m_arrpTableauStacks.at(i)->Empty())
+		{
+			if(SelectStack(m_arrpTableauStacks.at(i), s_poiMousePos))
+			{
+				m_bClickToHandle = false;
+				return;
+			}
+		}
 	}
 	if (!m_pWasteStack->Empty())
 	{
-		SelectStack(m_pWasteStack, poiMousePos);
+		SelectStack(m_pWasteStack, s_poiMousePos);
 	}
 
+	m_bClickToHandle = false;
+	return;
+}
+
+void CGame::HandleClickRelease()
+{
 	if (m_pStackGrabbed != nullptr)
 	{
-		MoveGrabedStack(poiMousePos);
+		PlaceGrabbedStack(s_poiMousePos);
 	}
-
-	s_poiPreviousMousePos = poiMousePos;
-}
-
-void CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
-{
-	RECT stackRect = _staStack->GetClickableArea();
-
-	if (GetAsyncKeyState(VK_LBUTTON))
-	{
-		// Check if the mouse is in the box of a stack
-		if (_poiMousePos.x >= stackRect.left &&
-			_poiMousePos.x <= stackRect.right &&
-			_poiMousePos.y >= stackRect.top &&
-			_poiMousePos.y <= stackRect.bottom)
-		{
-			if (m_bClicked == true)
-			{
-				m_pStackGrabbed = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
-			}
-			/*test->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
-				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
-
-			/*_staStack->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
-				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
-
-			m_bClicked = false;
-		}
-	}
-	
-}
-
-void CGame::MoveGrabedStack(POINT _poiMousePos)
-{
-	m_pStackGrabbed->SetPos({ m_pStackGrabbed->GetPos().x + _poiMousePos.x - s_poiPreviousMousePos.x,
-		m_pStackGrabbed->GetPos().y + _poiMousePos.y - s_poiPreviousMousePos.y });
-
-	//TODO: Create a PlaceGrabbedStack function for this 
-	//V
-	if (m_bClickReleased == true)
-	{
-		std::vector<IStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
-		bool bCanPlace = false;
-
-		for (IStack* pStack : vecpColidedStack)
-		{
-			bCanPlace = pStack->TryPlace(m_pStackGrabbed) || bCanPlace;
-			pStack->SetPos(pStack->GetPos());
-
-			if (bCanPlace == true)
-			{
-				break;
-			}
-		}
-		if (bCanPlace == false)
-		{
-			// Return m_pStackGrabbed to its old stack
-		}
-	}
-
-	m_bClickReleased = false;
-	//^
+	m_bClickReleaseToHandle = false;
 }
 
 std::vector<IStack *> CGame::ColidingStack(IStack * pStack)
 {
 	std::vector<IStack *> vecpCollidingStacks;
 	RECT otherStackRect;
-	RECT stackRect = pStack->GetClickableArea();
+	RECT stackRect = pStack->GetBoundingBox();
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
-		otherStackRect = m_arrpTableauStacks.at(i)->GetClickableArea();
+		otherStackRect = m_arrpTableauStacks.at(i)->GetBoundingBox();
 
 		if (stackRect.left < otherStackRect.right && stackRect.right > otherStackRect.left &&
 			stackRect.top < otherStackRect.bottom && stackRect.bottom > otherStackRect.top)
@@ -266,13 +310,13 @@ CGame::ExecuteOneFrame()
     float fDT = m_pClock->GetDeltaTick();
 
 	//TODO: Remove this temp if statment setting the top card to be revealed
-	for (int i = 0; i < s_kszNumTableauStacks; ++i)
+	/*for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
 		if (m_arrpTableauStacks.at(i)->Top()->GetIsRevealed() == false)
 		{
 			m_arrpTableauStacks.at(i)->Top()->RevealCard();
 		}
-	}
+	}*/
 
     Process(fDT);
     Draw();

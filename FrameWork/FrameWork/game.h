@@ -46,8 +46,11 @@ public:
     void Draw();
     void Process(float _fDeltaTick);
 
-	void SelectStack(IStack* _staStack, POINT _poiMousePos);
-	void MoveGrabedStack(POINT _poiMousePos);
+	bool SelectStack(IStack* _staStack, POINT _poiMousePos);
+	void MoveGrabbedStack(POINT _poiMousePos);
+	void PlaceGrabbedStack(POINT _poiMousePos);
+	void HandleClick();
+	void HandleClickRelease();
 
 	// Returns a stack that the input stack collides with
 	std::vector<IStack*> ColidingStack(IStack* pStack);
@@ -71,6 +74,7 @@ private:
 
     // Member Variables
 	IStack* m_pStackGrabbed;
+	IStack* m_pStackGrabbedFromStack;
 
 	CStockStack* m_pStockStack;
 	CWasteStack* m_pWasteStack;
@@ -79,11 +83,10 @@ private:
 
 	static const int s_kiTableauStackSpacing;
 	static const size_t s_kszNumTableauStacks;
-	static const size_t s_kszWastSize;
 
 public:
-	bool m_bClicked;
-	bool m_bClickReleased;
+	bool m_bClickToHandle;
+	bool m_bClickReleaseToHandle;
 
 protected:
     CClock* m_pClock;

@@ -26,14 +26,18 @@ public:
 	// Draw the stack
 	virtual void Draw();
 
-	// Set the position of the top left corner of the stack
-	virtual void SetPos(const TPosition&) = 0;
-
 	// Returns the box of the stack
-	virtual RECT GetClickableArea();
+	virtual RECT GetBoundingBox();
 
 	// Returns the index of the card you clicked in the stack
 	virtual int ClickedCardIndex(POINT _poiMousePos) = 0;
+
+	// Notify the stack of any changes that have been made to it 
+	// (should be called to reveal top cards)
+	virtual void NotifyChange() = 0;
+	
+	// Set the position of the top left corner of the stack
+	void SetPos(const TPosition&);
 	
 	// Get the position of the top left corner of the stack
 	TPosition GetPos() const;

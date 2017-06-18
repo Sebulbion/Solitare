@@ -12,8 +12,10 @@ public:
 	// Inherited via IStack
 	virtual bool TryPlace(IStack * pStack) override;
 	virtual IStack * SplitStack(int _iIndex) override;
-	virtual void SetPos(const TPosition &) override;
 	virtual int ClickedCardIndex(POINT _poiMousePos) override;
+	virtual void NotifyChange() override;
+
+	static const size_t s_kszNumWasteRevealed;
 
 private:
 	CWasteStack(const CWasteStack& _kr) = delete;

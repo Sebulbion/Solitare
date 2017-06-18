@@ -44,7 +44,14 @@ void IStack::Draw()
 	}
 }
 
-RECT IStack::GetClickableArea()
+void IStack::SetPos(const TPosition & _krpos)
+{
+	m_pos = _krpos;
+
+	NotifyChange();
+}
+
+RECT IStack::GetBoundingBox()
 {
 	RECT recRect;
 
@@ -89,9 +96,8 @@ int IStack::GetHeight() const
 void IStack::Push(CCard* const & _krpCard)
 {
 	m_listpCards.push_front(_krpCard);
-
-	// Quick hack to update the position of the newly added card
-	SetPos(m_pos);
+	
+	NotifyChange();
 }
 
 CCard*& IStack::Top()
