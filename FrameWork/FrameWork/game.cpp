@@ -105,7 +105,7 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 			m_arrpTableauStacks.at(i)->Push(pCard);
 		}
 
-		m_arrpTableauStacks.at(i)->SetPos({ i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), 0 });
+		m_arrpTableauStacks.at(i)->SetPos({ s_kiTableauStackSpacing + i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), CCard::GetCardHeight() + s_kiTableauStackSpacing });
 	}
 
     return (true);
