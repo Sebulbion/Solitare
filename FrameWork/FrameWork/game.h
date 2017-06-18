@@ -45,8 +45,11 @@ public:
     void Draw();
     void Process(float _fDeltaTick);
 
-	//TODO: Make generic for all stacks with the help of lance
 	void SelectStack(IStack* _staStack, POINT _poiMousePos);
+	void MoveGrabedStack(POINT _poiMousePos);
+
+	// Returns a stack that the input stack collides with
+	IStack* ColidingStack(IStack* pStack);
 
     void ExecuteOneFrame();
 
@@ -77,6 +80,8 @@ private:
 	static const size_t s_kszNumTableauStacks;
 
 public:
+	static bool s_bClicked;
+	static bool s_bClickReleased;
 
 protected:
     CClock* m_pClock;

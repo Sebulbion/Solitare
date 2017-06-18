@@ -28,6 +28,8 @@
 CGame* CGame::s_pGame = 0;
 const int CGame::s_kiTableauStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
+bool CGame::s_bClicked = false;
+bool CGame::s_bClickReleased = false;
 
 // Static Function Prototypes
 static POINT s_poiPreviousMousePos;
@@ -151,6 +153,11 @@ CGame::Process(float _fDeltaTick)
 		SelectStack(m_arrpTableauStacks.at(i), poiMousePos);
 	}
 
+	if (m_pStackGrabbed != nullptr)
+	{
+		MoveGrabedStack(poiMousePos);
+	}
+
 	s_poiPreviousMousePos = poiMousePos;
 }
 
@@ -166,18 +173,54 @@ void CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
 			_poiMousePos.y >= stackRect.top &&
 			_poiMousePos.y <= stackRect.bottom)
 		{
-			//IStack* test = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
+			if (s_bClicked == true)
+			{
+				m_pStackGrabbed = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
+			}
 			/*test->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
 				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
 
-			_staStack->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
-				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });
+			/*_staStack->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
+				stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
+
+			s_bClicked = false;
 		}
 	}
 	
 }
 
-void 
+void CGame::MoveGrabedStack(POINT _poiMousePos)
+{
+	m_pStackGrabbed->SetPos({ m_pStackGrabbed->GetPos().x + _poiMousePos.x - s_poiPreviousMousePos.x,
+		m_pStackGrabbed->GetPos().y + _poiMousePos.y - s_poiPreviousMousePos.y });
+
+	/*if (s_bClickReleased == true)
+	{
+		m_pStackGrabbed->SetPos(ColidingStack(m_pStackGrabbed)->GetPos());
+		m_pStackGrabbed = nullptr;
+	}*/
+
+	s_bClickReleased = false;
+}
+
+IStack * CGame::ColidingStack(IStack * pStack)
+{
+	RECT otherStackRect;
+	RECT stackRect = pStack->GetClickableArea();
+	for (int i = 0; i < s_kszNumTableauStacks; ++i)
+	{
+		otherStackRect = m_arrpTableauStacks.at(i)->GetClickableArea();
+
+		if (stackRect.left < otherStackRect.right && stackRect.right > otherStackRect.left &&
+			stackRect.top > otherStackRect.bottom && stackRect.bottom < otherStackRect.top)
+		{
+			return m_arrpTableauStacks.at(i);
+		}
+	}
+	return nullptr;
+}
+
+void
 CGame::ExecuteOneFrame()
 {
     float fDT = m_pClock->GetDeltaTick();

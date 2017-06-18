@@ -19,13 +19,22 @@ bool CTableauStack::TryPlace(IStack * pStack)
 
 IStack * CTableauStack::SplitStack(int _iIndex)
 {
-	CTableauStack* pstaStack = new CTableauStack();
+	CTableauStack* pStack = new CTableauStack();
 	auto it = m_listpCards.begin();
 	std::advance(it, _iIndex);
 
-	pstaStack->m_listpCards.splice(pstaStack->m_listpCards.begin(), m_listpCards, it);
+	if ((*it)->GetIsRevealed() == true)
+	{
+		it++;
+		pStack->m_listpCards.splice(pStack->m_listpCards.begin(), m_listpCards, m_listpCards.begin(), it);
+		pStack->SetPos(TPosition{ GetPos().x, GetPos().y + (m_iCardOffset * (int)m_listpCards.size()) });
 
-	return pstaStack;
+		return pStack;
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 void CTableauStack::Draw()
@@ -63,10 +72,10 @@ int CTableauStack::ClickedCardIndex(POINT _poiMousePos)
 	{
 		if (_poiMousePos.y <= GetPos().y + ((i + 1) * m_iCardOffset))
 		{
-			return m_listpCards.size() - i;
+			return m_listpCards.size() - 1 - i;
 		}
 	}
-	return (0);
+	return 0;
 }
 
 void CTableauStack::SetPos(const TPosition & _krpos)
