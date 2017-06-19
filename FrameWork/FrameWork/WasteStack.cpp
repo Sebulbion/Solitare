@@ -1,4 +1,5 @@
 #include "WasteStack.h"
+#include "TableauStack.h"
 #include "Card.h"
 #include "utils.h"
 
@@ -22,7 +23,13 @@ bool CWasteStack::TryPlace(IStack * pStack)
 
 IStack * CWasteStack::SplitStack(int _iIndex)
 {
-	IStack* pStack = new CWasteStack();
+	// Only the top card can be split off a waste stack
+	if (_iIndex > 0)
+	{
+		return nullptr;
+	}
+
+	IStack* pStack = new CTableauStack();
 	SplitStackHelper(_iIndex, pStack);
 
 	return pStack;
@@ -45,14 +52,26 @@ void CWasteStack::NotifyChange()
 	int i = 0;
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
-		(*it)->SetPos({ m_pos.x, m_pos.y });
+		int iDistToEnd = m_listpCards.size() - i;
+		if (iDistToEnd < s_kszNumWasteRevealed)
+		{
+			int iOffsetIdx;
+			if (m_listpCards.size() < s_kszNumWasteRevealed)
+			{
+				iOffsetIdx = i;
+			}
+			else
+			{
+				iOffsetIdx = s_kszNumWasteRevealed - iDistToEnd;
+			}
+			(*it)->SetPos({ m_pos.x + iOffsetIdx * m_iCardOffset, m_pos.y });
+		}
+		else
+		{
+			(*it)->SetPos({ m_pos.x, m_pos.y });
+		}
+
 		++i;
 	}
 
-	i = 2;
-	for (auto it = m_listpCards.begin(); it != m_listpCards.end() && i >= 0; it++)
-	{
-		(*it)->SetPos({ m_pos.x + i * m_iCardOffset, m_pos.y });
-		--i;
-	}
 }

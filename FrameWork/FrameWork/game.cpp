@@ -186,14 +186,16 @@ bool CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
 	if (InsideRect(_poiMousePos, stackBoundingBox))
 	{
 		m_pStackGrabbed = _staStack->SplitStack(_staStack->ClickedCardIndex(_poiMousePos));
-		m_pStackGrabbedFromStack = _staStack;
 
-		return true;
+		if (m_pStackGrabbed != nullptr)
+		{
+			m_pStackGrabbedFromStack = _staStack;
+			return true;
+		}
 	}
-	else
-	{
-		return false;
-	}
+	
+	return false;
+
 
 	/*test->SetPos({ stackRect.left + _poiMousePos.x - s_poiPreviousMousePos.x,
 		stackRect.top + _poiMousePos.y - s_poiPreviousMousePos.y });*/
