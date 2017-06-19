@@ -123,7 +123,7 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 
 	for (int i = 0; i < s_kszNumFoundationStacks; ++i)
 	{
-		m_arrpFoundationStacks.at(i)->SetPos({ (CCard::GetCardWidth() * 3) + s_kiStackSpacing + i * 
+		m_arrpFoundationStacks.at(i)->SetPos({ 3 * CCard::GetCardWidth() + 4 * s_kiStackSpacing + i *
 			(CCard::GetCardWidth() + s_kiStackSpacing), 0 });
 	}
 
@@ -271,7 +271,7 @@ void CGame::HandleClick()
 		else
 		{
 			// Add 3 cards from the stock to the waste
-			for (size_t i = 0; i < CWasteStack::s_kszNumWasteRevealed; ++i)
+			for (size_t i = 0; i < CWasteStack::s_kszNumWasteRevealed && !m_pStockStack->Empty(); ++i)
 			{
 				CCard* pCard = m_pStockStack->Top();
 				m_pStockStack->Pop();

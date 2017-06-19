@@ -41,7 +41,7 @@ void ABStack::Draw()
 {
 	if (Empty())
 	{
-		m_pEmptyCard->Draw(m_pos);
+		m_pEmptyCard->Draw(m_pos, CCard::GetCardWidth(), CCard::GetCardHeight());
 	}
 	else
 	{
