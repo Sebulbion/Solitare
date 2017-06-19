@@ -27,7 +27,7 @@
 
 // Static Variables
 CGame* CGame::s_pGame = 0;
-const int CGame::s_kiTableauStackSpacing = 50;
+const int CGame::s_kiStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
 
 // Static Function Prototypes
@@ -99,12 +99,12 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 
 	// Init and place stacks
 	m_pStockStack = CStockStack::CreateFullDeck();
-	m_pStockStack->SetPos({ s_kiTableauStackSpacing, 0 });
-	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiTableauStackSpacing, 0 });
+	m_pStockStack->SetPos({ s_kiStackSpacing, 0 });
+	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiStackSpacing, 0 });
 
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
-		m_arrpTableauStacks.at(i)->SetPos({ s_kiTableauStackSpacing + i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), CCard::GetCardHeight() + s_kiTableauStackSpacing });
+		m_arrpTableauStacks.at(i)->SetPos({ s_kiStackSpacing + i * (CCard::GetCardWidth() + s_kiStackSpacing), CCard::GetCardHeight() + s_kiStackSpacing });
 
 		for (int j = 0; j < i + 1; ++j)
 		{
