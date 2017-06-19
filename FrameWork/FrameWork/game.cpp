@@ -247,12 +247,27 @@ void CGame::HandleClick()
 	// Put cards from stock into waste when the player clicks the stock
 	if (InsideRect(s_poiMousePos, m_pStockStack->GetBoundingBox()))
 	{
-		for (size_t i = 0; i < CWasteStack::s_kszNumWasteRevealed; ++i)
+		if (m_pStockStack->Empty())
 		{
-			CCard* pCard = m_pStockStack->Top();
-			m_pStockStack->Pop();
-			m_pWasteStack->Push(pCard);
-			pCard->RevealCard();
+			// Reset stock and clear waste
+			while(!m_pWasteStack->Empty())
+			{
+				CCard* pCard = m_pWasteStack->Top();
+				m_pWasteStack->Pop();
+				m_pStockStack->Push(pCard);
+				pCard->HideCard();
+			}
+		}
+		else
+		{
+			// Add 3 cards from the stock to the waste
+			for (size_t i = 0; i < CWasteStack::s_kszNumWasteRevealed; ++i)
+			{
+				CCard* pCard = m_pStockStack->Top();
+				m_pStockStack->Pop();
+				m_pWasteStack->Push(pCard);
+				pCard->RevealCard();
+			}
 		}
 
 		m_bClickToHandle = false;
