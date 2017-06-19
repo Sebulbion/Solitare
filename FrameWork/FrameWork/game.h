@@ -81,7 +81,7 @@ private:
 	std::array<CFoundationStack*, 4> m_arrpFoundationStacks;
 	std::array<CTableauStack*, 7> m_arrpTableauStacks;
 
-	static const int s_kiTableauStackSpacing;
+	static const int s_kiStackSpacing;
 	static const size_t s_kszNumTableauStacks;
 	static const size_t s_kszNumFoundationStacks;
 
