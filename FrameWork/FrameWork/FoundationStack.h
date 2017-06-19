@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FOUNDATIONSTACK_H
+#define FOUNDATIONSTACK_H
 
 #include "Stack.h"
 
@@ -18,4 +19,4 @@ private:
 	CFoundationStack(const CFoundationStack& _kr) = delete;
 	CFoundationStack& operator= (const CFoundationStack& _kr) = delete;
 };
-
+#endif //FOUNDATIONSTACK_H

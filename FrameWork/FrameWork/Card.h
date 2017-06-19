@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CARD_H
+#define CARD_H
 
 #include "sprite.h"
 #include "Position.h"
@@ -45,4 +46,5 @@ private:
 	CCard(const CCard& _kr) = delete;
 	CCard& operator= (const CCard& _kr) = delete;
 };
+#endif // CARD_H
 

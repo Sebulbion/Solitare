@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STOCKSTACK_H
+#define STOCKSTACK_H
 
 #include <Windows.h>
 #include "Stack.h"
@@ -22,4 +23,4 @@ private:
 	CStockStack(const CStockStack& _kr) = delete;
 	CStockStack& operator= (const CStockStack& _kr) = delete;
 };
-
+#endif //STOCKSTACK_H

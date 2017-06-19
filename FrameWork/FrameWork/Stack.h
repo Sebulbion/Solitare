@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STACK_H
+#define STACK_H
 
 #include <Windows.h>
 #include <list>
@@ -78,4 +79,4 @@ protected:
 	std::list<CCard*> m_listpCards;
 	CSprite* m_pEmptyCard;
 };
-
+#endif //STACK_H

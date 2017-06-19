@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WASTESTACK_H
+#define WASTESTACK_H
 
 #include <Windows.h>
 #include "Stack.h"
@@ -23,4 +24,5 @@ private:
 
 	int m_iCardOffset;
 };
+#endif //WASTESTACK_H
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TABLEAUSTACK_H
+#define TABLEAUSTACK_H
 
 #include <Windows.h>
 #include "Stack.h"
@@ -21,4 +22,4 @@ private:
 
 	int m_iCardOffset;
 };
-
+#endif //TABLEAUSTACK_H
