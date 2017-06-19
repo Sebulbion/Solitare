@@ -120,8 +120,8 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 
 	for (int i = 0; i < s_kszNumFoundationStacks; ++i)
 	{
-		m_arrpFoundationStacks.at(i)->SetPos({ (CCard::GetCardWidth() * 3) + s_kiTableauStackSpacing + i * 
-			(CCard::GetCardWidth() + s_kiTableauStackSpacing), 0 });
+		m_arrpFoundationStacks.at(i)->SetPos({ (CCard::GetCardWidth() * 3) + s_kiStackSpacing + i * 
+			(CCard::GetCardWidth() + s_kiStackSpacing), 0 });
 	}
 
     return (true);
