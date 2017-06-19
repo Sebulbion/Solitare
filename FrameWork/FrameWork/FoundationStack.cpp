@@ -52,7 +52,7 @@ IStack * CFoundationStack::SplitStack(int _iIndex)
 
 int CFoundationStack::ClickedCardIndex(POINT _poiMousePos)
 {
-	return (m_listpCards.size() - 1);
+	return 0;
 }
 
 void CFoundationStack::NotifyChange()
