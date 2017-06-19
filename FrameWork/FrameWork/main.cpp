@@ -20,8 +20,12 @@
 #include "Game.h"
 #include "Clock.h"
 #include "utils.h"
+#include "resource.h"
+#include "backbuffer.h"
 
 #define WINDOW_CLASS_NAME L"BSENGGFRAMEWORK"
+
+HMENU g_hMenu;
 
 LRESULT CALLBACK
 WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
@@ -44,6 +48,47 @@ WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 	case WM_LBUTTONUP:
 	{
 		CGame::GetInstance().m_bClickReleaseToHandle = true;
+		return(0);
+		break;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(_wParam))
+		{
+		case ID_FILE_QUIT:
+		{
+			PostQuitMessage(0);
+			break;
+		}
+		case ID_FILE_NEWGAME:
+		{
+			HINSTANCE hInstance = CGame::GetInstance().GetAppInstance();
+			HWND hWnd = CGame::GetInstance().GetWindow();
+			int iWidth = (CGame::GetInstance().GetBackBuffer())->GetWidth();
+			int iHeight = (CGame::GetInstance().GetBackBuffer())->GetHeight();
+
+			CGame::DestroyInstance();
+			CGame::GetInstance().Initialise(hInstance, hWnd, iWidth, iHeight);
+			break;
+		}
+		case ID_FILE_ENABLEEASYMODE:
+		{
+			CGame::GetInstance().ToggleEasyMode();
+
+			if (CGame::GetInstance().IsEasyMode())
+			{
+				CheckMenuItem(g_hMenu, ID_FILE_ENABLEEASYMODE, MF_CHECKED);
+			}
+			else
+			{
+				CheckMenuItem(g_hMenu, ID_FILE_ENABLEEASYMODE, MF_UNCHECKED);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+
 		return(0);
 		break;
 	}
@@ -79,15 +124,17 @@ CreateAndRegisterWindow(HINSTANCE _hInstance, int _iWidth, int _iHeight, LPCWSTR
         return (0);
     }
 
+	g_hMenu = LoadMenu(_hInstance, MAKEINTRESOURCE(IDR_MENU1));
+
     HWND hwnd; 
     hwnd = CreateWindowEx(NULL,
                   WINDOW_CLASS_NAME,
                   _pcTitle,
-              WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_VISIBLE, 
+                  WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_VISIBLE, 
                   CW_USEDEFAULT, CW_USEDEFAULT,
                   _iWidth, _iHeight,
                   NULL,
-                  NULL,
+                  g_hMenu,
                   _hInstance,
                   NULL);
     
@@ -106,7 +153,7 @@ WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdline, int _i
     MSG msg;
     ZeroMemory(&msg, sizeof(MSG));
 
-    const int kiWidth = 1600;
+    const int kiWidth = 1300;
     const int kiHeight = 900;
 
     HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");

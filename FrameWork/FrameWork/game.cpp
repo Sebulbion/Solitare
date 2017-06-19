@@ -30,6 +30,7 @@ CGame* CGame::s_pGame = 0;
 const int CGame::s_kiStackSpacing = 50;
 const size_t CGame::s_kszNumTableauStacks = 7;
 const size_t CGame::s_kszNumFoundationStacks = 4;
+const size_t CGame::s_kszDefaultNumToPopFromStock = 3;
 
 // Static Function Prototypes
 static POINT s_poiPreviousMousePos;
@@ -45,6 +46,7 @@ CGame::CGame()
 , m_pStackGrabbed(nullptr)
 , m_bClickToHandle(false)
 , m_bClickReleaseToHandle(false)
+, m_szNumToPopFromStock(s_kszDefaultNumToPopFromStock)
 {
 	
 }
@@ -276,8 +278,8 @@ void CGame::HandleClick()
 		}
 		else
 		{
-			// Add 3 cards from the stock to the waste
-			for (size_t i = 0; i < CWasteStack::s_kszNumWasteRevealed && !m_pStockStack->Empty(); ++i)
+			// Add '3' (or 1 for easy mode) cards from the stock to the waste
+			for (size_t i = 0; i < m_szNumToPopFromStock && !m_pStockStack->Empty(); ++i)
 			{
 				CCard* pCard = m_pStockStack->Top();
 				m_pStockStack->Pop();
@@ -329,6 +331,23 @@ void CGame::HandleClickRelease()
 		PlaceGrabbedStack(s_poiMousePos);
 	}
 	m_bClickReleaseToHandle = false;
+}
+
+void CGame::ToggleEasyMode()
+{
+	if (m_szNumToPopFromStock == s_kszDefaultNumToPopFromStock)
+	{
+		m_szNumToPopFromStock = 1;
+	}
+	else
+	{
+		m_szNumToPopFromStock = s_kszDefaultNumToPopFromStock;
+	}
+}
+
+bool CGame::IsEasyMode()
+{
+	return m_szNumToPopFromStock != s_kszDefaultNumToPopFromStock;
 }
 
 std::vector<ABStack *> CGame::ColidingStack(ABStack * pStack)

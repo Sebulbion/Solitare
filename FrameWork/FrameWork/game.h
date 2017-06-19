@@ -52,6 +52,13 @@ public:
 	void HandleClick();
 	void HandleClickRelease();
 
+	// Make the stock only pop 1 card into the waste at a time
+	// Reverts back to default (3 cards) if already in easy mode
+	void ToggleEasyMode();
+
+	// Returns true when the game is set to only pop 1 card from the stock at a time
+	bool IsEasyMode();
+
 	// Returns a stack that the input stack collides with
 	std::vector<ABStack*> ColidingStack(ABStack* pStack);
 
@@ -83,9 +90,12 @@ private:
 	std::array<CFoundationStack*, 4> m_arrpFoundationStacks;
 	std::array<CTableauStack*, 7> m_arrpTableauStacks;
 
+	size_t m_szNumToPopFromStock;
+
 	static const int s_kiStackSpacing;
 	static const size_t s_kszNumTableauStacks;
 	static const size_t s_kszNumFoundationStacks;
+	static const size_t s_kszDefaultNumToPopFromStock;
 
 public:
 	bool m_bClickToHandle;

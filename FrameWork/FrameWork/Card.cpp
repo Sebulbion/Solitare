@@ -1,8 +1,8 @@
 #include "Card.h"
 #include "resource.h"
 
-const int CCard::s_kiCardWidth = 84;
-const int CCard::s_kiCardHeight = 117;
+const int CCard::s_kiCardWidth = 124;
+const int CCard::s_kiCardHeight = 157;
 
 CCard::CCard(ESUIT _eSuite, size_t _cardNum, bool _bIsRevealed) :
 	m_pSpriteCardAtlas(new CSprite()),
