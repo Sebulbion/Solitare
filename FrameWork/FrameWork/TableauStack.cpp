@@ -1,11 +1,14 @@
 #include "TableauStack.h"
 #include "Card.h"
+#include "resource.h"
+#include "sprite.h"
 
 
 CTableauStack::CTableauStack():
 	ABStack(),
 	m_iCardOffset(40)
 {
+	m_pEmptyCard->Initialise(IDB_BITMAP4, IDB_BITMAP1);
 }
 
 

@@ -43,19 +43,10 @@ CGame::CGame()
 , m_hMainWindow(0)
 , m_pBackBuffer(0)
 , m_pStackGrabbed(nullptr)
-, m_pStockStack(new CStockStack)
-, m_pWasteStack(new CWasteStack)
 , m_bClickToHandle(false)
 , m_bClickReleaseToHandle(false)
 {
-	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
-	{
-		rpTableauStack = new CTableauStack;
-	}
-	for (CFoundationStack*& rpFoundationStack : m_arrpFoundationStacks)
-	{
-		rpFoundationStack = new CFoundationStack;
-	}
+	
 }
 
 CGame::~CGame()
@@ -97,6 +88,18 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
+
+	m_pStockStack = new CStockStack;
+	m_pWasteStack = new CWasteStack;
+
+	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
+	{
+		rpTableauStack = new CTableauStack;
+	}
+	for (CFoundationStack*& rpFoundationStack : m_arrpFoundationStacks)
+	{
+		rpFoundationStack = new CFoundationStack;
+	}
 
 	// Init and place stacks
 	m_pStockStack = CStockStack::CreateFullDeck();
@@ -368,8 +371,6 @@ CGame::ExecuteOneFrame()
     Draw();
 
     m_pClock->Process();
-
-    Sleep(1);
 }
 
 CGame&

@@ -12,7 +12,6 @@ public:
 	// Inherited via IStack
 	virtual bool TryPlace(ABStack * pStack) override;
 	virtual ABStack * SplitStack(int _iIndex) override;
-	virtual void Draw() override;
 	virtual int ClickedCardIndex(POINT _poiMousePos) override;
 	virtual void NotifyChange() override;
 

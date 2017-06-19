@@ -180,6 +180,8 @@
     <Image Include="CardAtlas.bmp" />
     <Image Include="CardAtlasMask.bmp" />
     <Image Include="CardBack.bmp" />
+    <Image Include="EmptyCard.bmp" />
+    <Image Include="ShuffleCard.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

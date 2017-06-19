@@ -17,7 +17,7 @@
       <UniqueIdentifier>{2d0fde78-b0e1-4cd5-b902-969b96aa6cae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Stacks">
-      <UniqueIdentifier>{06f6df38-0238-4266-a3ab-3ba0e9e742e5}</UniqueIdentifier>
+      <UniqueIdentifier>{3ec371e2-1a8d-42da-85a9-3622c7b8c78d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,7 +42,7 @@
     <ClCompile Include="FoundationStack.cpp">
       <Filter>Source Files\Stacks</Filter>
     </ClCompile>
-    <ClCompile Include="Stack.cpp">
+    <ClCompile Include="StockStack.cpp">
       <Filter>Source Files\Stacks</Filter>
     </ClCompile>
     <ClCompile Include="TableauStack.cpp">
@@ -51,7 +51,7 @@
     <ClCompile Include="WasteStack.cpp">
       <Filter>Source Files\Stacks</Filter>
     </ClCompile>
-    <ClCompile Include="StockStack.cpp">
+    <ClCompile Include="Stack.cpp">
       <Filter>Source Files\Stacks</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,6 +115,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="CardBack.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="EmptyCard.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ShuffleCard.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

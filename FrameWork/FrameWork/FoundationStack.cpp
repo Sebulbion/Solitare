@@ -1,11 +1,13 @@
 #include "FoundationStack.h"
 #include "Card.h"
+#include "resource.h"
 
 
 
 CFoundationStack::CFoundationStack() :
 	ABStack()
 {
+	m_pEmptyCard->Initialise(IDB_BITMAP4, IDB_BITMAP1);
 }
 
 

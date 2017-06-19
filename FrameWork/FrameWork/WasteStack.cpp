@@ -2,6 +2,8 @@
 #include "TableauStack.h"
 #include "Card.h"
 #include "utils.h"
+#include "resource.h"
+#include "sprite.h"
 
 const size_t CWasteStack::s_kszNumWasteRevealed = 3;
 
@@ -9,6 +11,7 @@ CWasteStack::CWasteStack() :
 	ABStack(),
 	m_iCardOffset(40)
 {
+	m_pEmptyCard->Initialise(IDB_BITMAP4, IDB_BITMAP1);
 }
 
 

@@ -5,6 +5,8 @@
 
 #include "Position.h"
 
+class CSprite;
+
 class CCard;
 
 class ABStack
@@ -73,5 +75,6 @@ protected:
 	TPosition m_pos;
 
 	std::list<CCard*> m_listpCards;
+	CSprite* m_pEmptyCard;
 };
 

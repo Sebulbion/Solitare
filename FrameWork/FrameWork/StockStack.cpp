@@ -5,11 +5,14 @@
 
 #include "StockStack.h"
 #include "Card.h"
+#include "resource.h"
+#include "sprite.h"
 
 
 CStockStack::CStockStack() :
 	ABStack()
 {
+	m_pEmptyCard->Initialise(IDB_BITMAP5, IDB_BITMAP1);
 }
 
 
@@ -25,14 +28,6 @@ bool CStockStack::TryPlace(ABStack * pStack)
 ABStack * CStockStack::SplitStack(int _iIndex)
 {
 	return nullptr;
-}
-
-void CStockStack::Draw()
-{
-	if (m_listpCards.size() > 0)
-	{
-		m_listpCards.front()->Draw();
-	}
 }
 
 int CStockStack::ClickedCardIndex(POINT _poiMousePos)

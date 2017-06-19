@@ -1,11 +1,12 @@
 #include "Stack.h"
 #include "Card.h"
-
+#include "sprite.h"
 
 ABStack::ABStack() :
 	m_iWidth(CCard::GetCardWidth()),
 	m_iHeight(CCard::GetCardHeight()),
-	m_pos({ 0, 0 })
+	m_pos({ 0, 0 }),
+	m_pEmptyCard(new CSprite())
 {
 }
 
@@ -38,9 +39,16 @@ ABStack::~ABStack()
 
 void ABStack::Draw()
 {
-	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
+	if (Empty())
 	{
-		(*it)->Draw();
+		m_pEmptyCard->Draw(m_pos);
+	}
+	else
+	{
+		for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
+		{
+			(*it)->Draw();
+		}
 	}
 }
 
