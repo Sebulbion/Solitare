@@ -91,7 +91,6 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
-	m_pStockStack = new CStockStack;
 	m_pWasteStack = new CWasteStack;
 
 	for (CTableauStack*& rpTableauStack : m_arrpTableauStacks)
