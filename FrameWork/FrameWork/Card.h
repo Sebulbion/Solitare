@@ -1,3 +1,19 @@
+//
+// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+//
+// (c) 2016 Media Design School
+//
+// File Name	: Card.h
+// Description	: Card header file
+// Authors		: Lance Chaney & Sebastian Tengdahl
+// Mail			: lance.cha7337@mediadesign.school.nz
+//                sebastian.ten7230@mediadesign.school.nz
+//
+
+#pragma once
 #ifndef CARD_H
 #define CARD_H
 
