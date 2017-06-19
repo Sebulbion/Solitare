@@ -27,7 +27,7 @@ bool CWasteStack::TryPlace(ABStack * pStack)
 ABStack * CWasteStack::SplitStack(int _iIndex)
 {
 	// Only the top card can be split off a waste stack
-	if (_iIndex > 0)
+	if (_iIndex != 0)
 	{
 		return nullptr;
 	}
@@ -40,7 +40,7 @@ ABStack * CWasteStack::SplitStack(int _iIndex)
 
 int CWasteStack::ClickedCardIndex(POINT _poiMousePos)
 {
-	for (int i = 0; i < s_kszNumWasteRevealed - 1; ++i)
+	for (int i = 0; i < s_kszNumWasteRevealed - 1 && i < GetSize() - 1; ++i)
 	{
 		if (_poiMousePos.x <= GetPos().x + ((i + 1) * m_iCardOffset))
 		{
