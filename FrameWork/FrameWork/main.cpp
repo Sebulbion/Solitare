@@ -167,9 +167,7 @@ WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdline, int _i
 
     HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Solitaire");
 
-    CGame& rGame = CGame::GetInstance();
-
-    if (!rGame.Initialise(_hInstance, hwnd, kiWidth, kiHeight))
+    if (!CGame::GetInstance().Initialise(_hInstance, hwnd, kiWidth, kiHeight))
     {
         // Failed
         return (0);
@@ -184,7 +182,20 @@ WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdline, int _i
         }
         else
         {
-            rGame.ExecuteOneFrame();
+			CGame::GetInstance().ExecuteOneFrame();
+
+			// Check win condition
+			if (CGame::GetInstance().CheckWinCondition())
+			{
+				MessageBoxA(hwnd, "You Won", "You Won", MB_OK);
+
+				CGame::DestroyInstance();
+				if (!CGame::GetInstance().Initialise(_hInstance, hwnd, kiWidth, kiHeight))
+				{
+					// Failed
+					return (0);
+				}
+			}
         }
     }
 

@@ -182,12 +182,6 @@ CGame::Process(float _fDeltaTick)
 		HandleClickRelease();
 	}
 
-	// Check win condition
-	if (CheckWinCondition())
-	{
-		MessageBoxA(m_hMainWindow, "You Won", "You Won", MB_OK);
-	}
-
 	s_poiPreviousMousePos = s_poiMousePos;
 }
 
@@ -231,7 +225,7 @@ void CGame::MoveGrabbedStack(POINT _poiMousePos)
 
 void CGame::PlaceGrabbedStack(POINT _poiMousePos)
 {
-	std::vector<ABStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
+	std::vector<ABStack *> vecpColidedStack = CollidingStack(m_pStackGrabbed);
 	bool bStackPlaced = false;
 
 	for (ABStack* pStack : vecpColidedStack)
@@ -350,7 +344,7 @@ bool CGame::IsEasyMode()
 	return m_szNumToPopFromStock != s_kszDefaultNumToPopFromStock;
 }
 
-std::vector<ABStack *> CGame::ColidingStack(ABStack * pStack)
+std::vector<ABStack *> CGame::CollidingStack(ABStack * pStack)
 {
 	std::vector<ABStack *> vecpCollidingStacks;
 	RECT otherStackRect;

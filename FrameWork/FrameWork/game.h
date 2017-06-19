@@ -61,7 +61,9 @@ public:
 	bool IsEasyMode();
 
 	// Returns a stack that the input stack collides with
-	std::vector<ABStack*> ColidingStack(ABStack* pStack);
+	std::vector<ABStack*> CollidingStack(ABStack* pStack);
+
+	bool CheckWinCondition();
 
     void ExecuteOneFrame();
 
@@ -79,8 +81,6 @@ private:
     CGame();
     CGame(const CGame& _kr) = delete;
     CGame& operator= (const CGame& _kr) = delete;
-
-	bool CheckWinCondition();
 
     // Member Variables
 	ABStack* m_pStackGrabbed;
