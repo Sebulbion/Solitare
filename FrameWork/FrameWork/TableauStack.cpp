@@ -3,7 +3,7 @@
 
 
 CTableauStack::CTableauStack():
-	IStack(),
+	ABStack(),
 	m_iCardOffset(40)
 {
 }
@@ -13,7 +13,7 @@ CTableauStack::~CTableauStack()
 {
 }
 
-bool CTableauStack::TryPlace(IStack * pStack)
+bool CTableauStack::TryPlace(ABStack * pStack)
 {
 	if (m_listpCards.size() == 0)
 	{
@@ -39,9 +39,9 @@ bool CTableauStack::TryPlace(IStack * pStack)
 	return false;
 }
 
-IStack * CTableauStack::SplitStack(int _iIndex)
+ABStack * CTableauStack::SplitStack(int _iIndex)
 {
-	IStack* pStack = new CTableauStack();
+	ABStack* pStack = new CTableauStack();
 	SplitStackHelper(_iIndex, pStack);
 
 	return pStack;

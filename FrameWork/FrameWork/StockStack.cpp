@@ -8,7 +8,7 @@
 
 
 CStockStack::CStockStack() :
-	IStack()
+	ABStack()
 {
 }
 
@@ -17,12 +17,12 @@ CStockStack::~CStockStack()
 {
 }
 
-bool CStockStack::TryPlace(IStack * pStack)
+bool CStockStack::TryPlace(ABStack * pStack)
 {
 	return false;
 }
 
-IStack * CStockStack::SplitStack(int _iIndex)
+ABStack * CStockStack::SplitStack(int _iIndex)
 {
 	return nullptr;
 }

@@ -2,14 +2,14 @@
 #include "Card.h"
 
 
-IStack::IStack() :
+ABStack::ABStack() :
 	m_iWidth(CCard::GetCardWidth()),
 	m_iHeight(CCard::GetCardHeight()),
 	m_pos({ 0, 0 })
 {
 }
 
-void IStack::SplitStackHelper(int _iIndex, IStack *& _pStack)
+void ABStack::SplitStackHelper(int _iIndex, ABStack *& _pStack)
 {
 	auto it = m_listpCards.begin();
 	std::advance(it, _iIndex);
@@ -28,7 +28,7 @@ void IStack::SplitStackHelper(int _iIndex, IStack *& _pStack)
 }
 
 
-IStack::~IStack()
+ABStack::~ABStack()
 {
 	for (CCard* pCard : m_listpCards)
 	{
@@ -36,7 +36,7 @@ IStack::~IStack()
 	}
 }
 
-void IStack::Draw()
+void ABStack::Draw()
 {
 	for (auto it = m_listpCards.rbegin(); it != m_listpCards.rend(); it++)
 	{
@@ -44,14 +44,14 @@ void IStack::Draw()
 	}
 }
 
-void IStack::SetPos(const TPosition & _krpos)
+void ABStack::SetPos(const TPosition & _krpos)
 {
 	m_pos = _krpos;
 
 	NotifyChange();
 }
 
-RECT IStack::GetBoundingBox()
+RECT ABStack::GetBoundingBox()
 {
 	RECT recRect;
 
@@ -73,54 +73,54 @@ RECT IStack::GetBoundingBox()
 	return recRect;
 }
 
-void IStack::Place(IStack * pStack)
+void ABStack::Place(ABStack * pStack)
 {
 	m_listpCards.splice(m_listpCards.begin(), pStack->m_listpCards, pStack->m_listpCards.begin(), pStack->m_listpCards.end());
 }
 
-TPosition IStack::GetPos() const
+TPosition ABStack::GetPos() const
 {
 	return m_pos;
 }
 
-int IStack::GetWidth() const
+int ABStack::GetWidth() const
 {
 	return m_iWidth;
 }
 
-int IStack::GetHeight() const
+int ABStack::GetHeight() const
 {
 	return m_iHeight;
 }
 
-int IStack::GetSize() const
+int ABStack::GetSize() const
 {
 	return m_listpCards.size();
 }
 
-void IStack::Push(CCard* const & _krpCard)
+void ABStack::Push(CCard* const & _krpCard)
 {
 	m_listpCards.push_front(_krpCard);
 	
 	NotifyChange();
 }
 
-CCard*& IStack::Top()
+CCard*& ABStack::Top()
 {
 	return m_listpCards.front();
 }
 
-CCard *& IStack::Bottom()
+CCard *& ABStack::Bottom()
 {
 	return m_listpCards.back();
 }
 
-void IStack::Pop()
+void ABStack::Pop()
 {
 	m_listpCards.pop_front();
 }
 
-bool IStack::Empty()
+bool ABStack::Empty()
 {
 	return m_listpCards.empty();
 }

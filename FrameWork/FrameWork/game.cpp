@@ -180,7 +180,7 @@ CGame::Process(float _fDeltaTick)
 	s_poiPreviousMousePos = s_poiMousePos;
 }
 
-bool CGame::SelectStack(IStack * _staStack, POINT _poiMousePos)
+bool CGame::SelectStack(ABStack * _staStack, POINT _poiMousePos)
 {
 	// Make sure there is nothing already grabbed
 	if (m_pStackGrabbed != nullptr)
@@ -220,10 +220,10 @@ void CGame::MoveGrabbedStack(POINT _poiMousePos)
 
 void CGame::PlaceGrabbedStack(POINT _poiMousePos)
 {
-	std::vector<IStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
+	std::vector<ABStack *> vecpColidedStack = ColidingStack(m_pStackGrabbed);
 	bool bStackPlaced = false;
 
-	for (IStack* pStack : vecpColidedStack)
+	for (ABStack* pStack : vecpColidedStack)
 	{
 		// Trying placing the stack
 		bStackPlaced = pStack->TryPlace(m_pStackGrabbed);
@@ -322,9 +322,9 @@ void CGame::HandleClickRelease()
 	m_bClickReleaseToHandle = false;
 }
 
-std::vector<IStack *> CGame::ColidingStack(IStack * pStack)
+std::vector<ABStack *> CGame::ColidingStack(ABStack * pStack)
 {
-	std::vector<IStack *> vecpCollidingStacks;
+	std::vector<ABStack *> vecpCollidingStacks;
 	RECT otherStackRect;
 	RECT stackRect = pStack->GetBoundingBox();
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)

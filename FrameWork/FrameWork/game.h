@@ -46,14 +46,14 @@ public:
     void Draw();
     void Process(float _fDeltaTick);
 
-	bool SelectStack(IStack* _staStack, POINT _poiMousePos);
+	bool SelectStack(ABStack* _staStack, POINT _poiMousePos);
 	void MoveGrabbedStack(POINT _poiMousePos);
 	void PlaceGrabbedStack(POINT _poiMousePos);
 	void HandleClick();
 	void HandleClickRelease();
 
 	// Returns a stack that the input stack collides with
-	std::vector<IStack*> ColidingStack(IStack* pStack);
+	std::vector<ABStack*> ColidingStack(ABStack* pStack);
 
     void ExecuteOneFrame();
 
@@ -73,8 +73,8 @@ private:
     CGame& operator= (const CGame& _kr) = delete;
 
     // Member Variables
-	IStack* m_pStackGrabbed;
-	IStack* m_pStackGrabbedFromStack;
+	ABStack* m_pStackGrabbed;
+	ABStack* m_pStackGrabbedFromStack;
 
 	CStockStack* m_pStockStack;
 	CWasteStack* m_pWasteStack;

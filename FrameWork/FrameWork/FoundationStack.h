@@ -2,15 +2,15 @@
 
 #include "Stack.h"
 
-class CFoundationStack : public IStack
+class CFoundationStack : public ABStack
 {
 public:
 	CFoundationStack();
 	virtual ~CFoundationStack();
 
 	// Inherited via IStack
-	virtual bool TryPlace(IStack * pStack) override;
-	virtual IStack * SplitStack(int _iIndex) override;
+	virtual bool TryPlace(ABStack * pStack) override;
+	virtual ABStack * SplitStack(int _iIndex) override;
 	virtual int ClickedCardIndex(POINT _poiMousePos) override;
 	virtual void NotifyChange() override;
 

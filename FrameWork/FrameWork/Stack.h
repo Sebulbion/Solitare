@@ -7,21 +7,21 @@
 
 class CCard;
 
-class IStack
+class ABStack
 {
 public:
-	virtual ~IStack();
+	virtual ~ABStack();
 
 	// Try placing the specified stack onto this stack
 	// This may fail due to stacking rules
-	virtual bool TryPlace(IStack* pStack) = 0;
+	virtual bool TryPlace(ABStack* pStack) = 0;
 
 	// Plases a stack onto another stack
-	void Place(IStack* pStack);
+	void Place(ABStack* pStack);
 
 	// Split the stack into two separate stacks, 
 	// return the top stack
-	virtual IStack* SplitStack(int _iIndex) = 0;
+	virtual ABStack* SplitStack(int _iIndex) = 0;
 
 	// Draw the stack
 	virtual void Draw();
@@ -57,13 +57,13 @@ public:
 	bool Empty();
 
 protected:
-	IStack();
-	IStack(const IStack& _kr) = delete;
-	IStack& operator= (const IStack& _kr) = delete;
+	ABStack();
+	ABStack(const ABStack& _kr) = delete;
+	ABStack& operator= (const ABStack& _kr) = delete;
 
 	// A Helper function for splitting stacks
 	// Returns the top stack into the supplied stack pointer
-	void SplitStackHelper(int _iIndex, IStack*& _pStack);
+	void SplitStackHelper(int _iIndex, ABStack*& _pStack);
 
 	// The dimensions of the stack when laid out on the screen
 	int m_iWidth;
