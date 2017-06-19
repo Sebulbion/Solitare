@@ -83,6 +83,7 @@ private:
 
 	static const int s_kiStackSpacing;
 	static const size_t s_kszNumTableauStacks;
+	static const size_t s_kszNumFoundationStacks;
 
 public:
 	bool m_bClickToHandle;
