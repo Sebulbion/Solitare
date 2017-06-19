@@ -69,6 +69,15 @@ WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 
 			CGame::DestroyInstance();
 			CGame::GetInstance().Initialise(hInstance, hWnd, iWidth, iHeight);
+
+			if (CGame::GetInstance().IsEasyMode())
+			{
+				CheckMenuItem(g_hMenu, ID_FILE_ENABLEEASYMODE, MF_CHECKED);
+			}
+			else
+			{
+				CheckMenuItem(g_hMenu, ID_FILE_ENABLEEASYMODE, MF_UNCHECKED);
+			}
 			break;
 		}
 		case ID_FILE_ENABLEEASYMODE:
