@@ -103,12 +103,12 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 
 	// Init and place stacks
 	m_pStockStack = CStockStack::CreateFullDeck();
-	m_pStockStack->SetPos({ s_kiStackSpacing, 0 });
-	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiStackSpacing, 0 });
+	m_pStockStack->SetPos({ s_kiStackSpacing, s_kiStackSpacing });
+	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiStackSpacing, s_kiStackSpacing });
 
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
-		m_arrpTableauStacks.at(i)->SetPos({ s_kiStackSpacing + i * (CCard::GetCardWidth() + s_kiStackSpacing), CCard::GetCardHeight() + s_kiStackSpacing });
+		m_arrpTableauStacks.at(i)->SetPos({ s_kiStackSpacing + i * (CCard::GetCardWidth() + s_kiStackSpacing), CCard::GetCardHeight() + 2 * s_kiStackSpacing });
 
 		for (int j = 0; j < i + 1; ++j)
 		{
@@ -124,7 +124,7 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	for (int i = 0; i < s_kszNumFoundationStacks; ++i)
 	{
 		m_arrpFoundationStacks.at(i)->SetPos({ 3 * CCard::GetCardWidth() + 4 * s_kiStackSpacing + i *
-			(CCard::GetCardWidth() + s_kiStackSpacing), 0 });
+			(CCard::GetCardWidth() + s_kiStackSpacing), s_kiStackSpacing });
 	}
 
     return (true);
@@ -178,6 +178,12 @@ CGame::Process(float _fDeltaTick)
 	if (m_bClickReleaseToHandle)
 	{
 		HandleClickRelease();
+	}
+
+	// Check win condition
+	if (CheckWinCondition())
+	{
+		MessageBoxA(m_hMainWindow, "You Won", "You Won", MB_OK);
 	}
 
 	s_poiPreviousMousePos = s_poiMousePos;
@@ -351,6 +357,21 @@ std::vector<ABStack *> CGame::ColidingStack(ABStack * pStack)
 		}
 	}
 	return vecpCollidingStacks;
+}
+
+bool CGame::CheckWinCondition()
+{
+	bool bWon = true;
+	for (CFoundationStack*& rpFStack : m_arrpFoundationStacks)
+	{
+		if (rpFStack->GetSize() != 13)
+		{
+			bWon = false;
+			break;
+		}
+	}
+
+	return bWon;
 }
 
 void

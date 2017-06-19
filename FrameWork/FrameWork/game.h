@@ -72,6 +72,8 @@ private:
     CGame(const CGame& _kr) = delete;
     CGame& operator= (const CGame& _kr) = delete;
 
+	bool CheckWinCondition();
+
     // Member Variables
 	ABStack* m_pStackGrabbed;
 	ABStack* m_pStackGrabbedFromStack;

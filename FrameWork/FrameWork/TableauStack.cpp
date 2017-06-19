@@ -6,7 +6,7 @@
 
 CTableauStack::CTableauStack():
 	ABStack(),
-	m_iCardOffset(40)
+	m_iCardOffset(20)
 {
 	m_pEmptyCard->Initialise(IDB_BITMAP4, IDB_BITMAP1);
 }
