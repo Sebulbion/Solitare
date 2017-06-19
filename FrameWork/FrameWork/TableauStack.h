@@ -3,15 +3,15 @@
 #include <Windows.h>
 #include "Stack.h"
 
-class CTableauStack : public IStack
+class CTableauStack : public ABStack
 {
 public:
 	CTableauStack();
 	virtual ~CTableauStack();
 
 	// Inherited via IStack
-	virtual bool TryPlace(IStack * pStack) override;
-	virtual IStack * SplitStack(int _iIndex) override;
+	virtual bool TryPlace(ABStack * pStack) override;
+	virtual ABStack * SplitStack(int _iIndex) override;
 	virtual int ClickedCardIndex(POINT _poiMousePos) override;
 	virtual void NotifyChange() override;
 

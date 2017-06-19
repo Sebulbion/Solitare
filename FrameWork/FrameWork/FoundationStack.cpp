@@ -4,7 +4,7 @@
 
 
 CFoundationStack::CFoundationStack() :
-	IStack()
+	ABStack()
 {
 }
 
@@ -13,7 +13,7 @@ CFoundationStack::~CFoundationStack()
 {
 }
 
-bool CFoundationStack::TryPlace(IStack * pStack)
+bool CFoundationStack::TryPlace(ABStack * pStack)
 {
 	if (pStack->GetSize() == 1)
 	{
@@ -42,9 +42,9 @@ bool CFoundationStack::TryPlace(IStack * pStack)
 	return false;
 }
 
-IStack * CFoundationStack::SplitStack(int _iIndex)
+ABStack * CFoundationStack::SplitStack(int _iIndex)
 {
-	IStack* pStack = new CFoundationStack();
+	ABStack* pStack = new CFoundationStack();
 	SplitStackHelper(_iIndex, pStack);
 
 	return pStack;

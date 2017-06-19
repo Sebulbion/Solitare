@@ -6,7 +6,7 @@
 const size_t CWasteStack::s_kszNumWasteRevealed = 3;
 
 CWasteStack::CWasteStack() :
-	IStack(),
+	ABStack(),
 	m_iCardOffset(40)
 {
 }
@@ -16,12 +16,12 @@ CWasteStack::~CWasteStack()
 {
 }
 
-bool CWasteStack::TryPlace(IStack * pStack)
+bool CWasteStack::TryPlace(ABStack * pStack)
 {
 	return false;
 }
 
-IStack * CWasteStack::SplitStack(int _iIndex)
+ABStack * CWasteStack::SplitStack(int _iIndex)
 {
 	// Only the top card can be split off a waste stack
 	if (_iIndex > 0)
@@ -29,7 +29,7 @@ IStack * CWasteStack::SplitStack(int _iIndex)
 		return nullptr;
 	}
 
-	IStack* pStack = new CTableauStack();
+	ABStack* pStack = new CTableauStack();
 	SplitStackHelper(_iIndex, pStack);
 
 	return pStack;
