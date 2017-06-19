@@ -50,6 +50,7 @@ public:
 	// Get the height of the stack as laid out on the screen
 	int GetHeight() const;
 
+	// Get the number of cards in the stack
 	int GetSize() const;
 
 	void Push(CCard* const &);

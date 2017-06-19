@@ -71,7 +71,7 @@ CSprite::Initialise(int _iSpriteResourceID, int _iMaskResourceID)
 }
 
 void
-CSprite::Draw(const TPosition& _krpos)
+CSprite::Draw(const TPosition& _krpos, int _iWidth, int _iHeight)
 {
     int iW = GetWidth();
     int iH = GetHeight();
@@ -83,16 +83,16 @@ CSprite::Draw(const TPosition& _krpos)
 
     HGDIOBJ hOldObj = SelectObject(s_hSharedSpriteDC, m_hMask);
 
-    BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, 0, 0, SRCAND);
+    StretchBlt(pBackBuffer->GetBFDC(), iX, iY, _iWidth, _iHeight, s_hSharedSpriteDC, 0, 0, iW, iH, SRCAND);
 
     SelectObject(s_hSharedSpriteDC, m_hSprite);
 
-    BitBlt(pBackBuffer->GetBFDC(), iX, iY, iW, iH, s_hSharedSpriteDC, 0, 0, SRCPAINT);
+	StretchBlt(pBackBuffer->GetBFDC(), iX, iY, _iWidth, _iHeight, s_hSharedSpriteDC, 0, 0, iW, iH, SRCPAINT);
 
     SelectObject(s_hSharedSpriteDC, hOldObj);
 }
 
-void CSprite::DrawSection(const TPosition& _krpos, int _iXFrames, int _iYFrames, int _iXFrameToDraw,int _iYFrameToDraw)
+void CSprite::DrawSection(const TPosition& _krpos, int _iWidth, int _iHeight, int _iXFrames, int _iYFrames, int _iXFrameToDraw,int _iYFrameToDraw)
 {
 	int iW = GetWidth() / _iXFrames;
 	int iH = GetHeight() / _iYFrames;
@@ -104,26 +104,30 @@ void CSprite::DrawSection(const TPosition& _krpos, int _iXFrames, int _iYFrames,
 
 	HGDIOBJ hOldObj = SelectObject(s_hSharedSpriteDC, m_hMask);
 
-	BitBlt(pBackBuffer->GetBFDC(), 
+	StretchBlt(pBackBuffer->GetBFDC(),
 		iX, 
 		iY, 
-		iW, 
-		iH, 
+		_iWidth,
+		_iHeight,
 		s_hSharedSpriteDC, 
 		iW * _iXFrameToDraw,
 		iH * _iYFrameToDraw,
+		iW,
+		iH,
 		SRCAND);
 
 	SelectObject(s_hSharedSpriteDC, m_hSprite);
 
-	BitBlt(pBackBuffer->GetBFDC(),
+	StretchBlt(pBackBuffer->GetBFDC(),
 		iX,
 		iY,
-		iW, 
-		iH, 
+		_iWidth,
+		_iHeight,
 		s_hSharedSpriteDC, 
 		iW * _iXFrameToDraw, 
-		iH * _iYFrameToDraw, 
+		iH * _iYFrameToDraw,
+		iW,
+		iH,
 		SRCPAINT);
 
 	SelectObject(s_hSharedSpriteDC, hOldObj);
