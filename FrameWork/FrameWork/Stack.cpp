@@ -93,6 +93,11 @@ int IStack::GetHeight() const
 	return m_iHeight;
 }
 
+int IStack::GetSize() const
+{
+	return m_listpCards.size();
+}
+
 void IStack::Push(CCard* const & _krpCard)
 {
 	m_listpCards.push_front(_krpCard);

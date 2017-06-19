@@ -101,6 +101,7 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	m_pStockStack = CStockStack::CreateFullDeck();
 	m_pStockStack->SetPos({ s_kiTableauStackSpacing, 0 });
 	m_pWasteStack->SetPos({ m_pStockStack->GetPos().x + m_pStockStack->GetWidth() + s_kiTableauStackSpacing, 0 });
+
 	for (int i = 0; i < s_kszNumTableauStacks; ++i)
 	{
 		m_arrpTableauStacks.at(i)->SetPos({ s_kiTableauStackSpacing + i * (CCard::GetCardWidth() + s_kiTableauStackSpacing), CCard::GetCardHeight() + s_kiTableauStackSpacing });
