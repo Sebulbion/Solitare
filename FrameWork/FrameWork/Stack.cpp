@@ -35,6 +35,7 @@ ABStack::~ABStack()
 	{
 		delete pCard;
 	}
+	delete m_pEmptyCard;
 }
 
 void ABStack::Draw()
