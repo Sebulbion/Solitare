@@ -35,17 +35,14 @@ public:
 
     bool Initialise(int _iResourceID, int _iMaskResourceID);
 
-    void Draw(const TPosition&);
+    void Draw(const TPosition&, int _iWidth, int _iHeight);
 
 	// Draws a section of a spritesheet
-	void DrawSection(const TPosition&, int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw);
+	void DrawSection(const TPosition&, int _iWidth, int _iHeight, int _iXFrames, int _iYFrames, int _iXFrameToDraw, int _iYFrameToDraw);
     void Process(float _fDeltaTick);
 
     int GetWidth() const;
     int GetHeight() const;
-
-    void TranslateRelative(int _iX, int _iY);
-    void TranslateAbsolute(int _iX, int _iY);
 
 protected:
     HBITMAP m_hSprite;

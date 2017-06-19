@@ -1,8 +1,8 @@
 #include "Card.h"
 #include "resource.h"
 
-const int CCard::s_kiCardWidth = 168;
-const int CCard::s_kiCardHeight = 234;
+const int CCard::s_kiCardWidth = 84;
+const int CCard::s_kiCardHeight = 117;
 
 CCard::CCard(ESUIT _eSuite, size_t _cardNum, bool _bIsRevealed) :
 	m_pSpriteCardAtlas(new CSprite()),
@@ -36,11 +36,11 @@ void CCard::Draw()
 {
 	if (m_bIsRevealed)
 	{
-		m_pSpriteCardAtlas->DrawSection(m_pos, 13, 4, m_cardNum, static_cast<int>(m_eSuit));
+		m_pSpriteCardAtlas->DrawSection(m_pos, s_kiCardWidth, s_kiCardHeight, 13, 4, m_cardNum, static_cast<int>(m_eSuit));
 	}
 	else
 	{
-		m_pSpriteCardBack->Draw(m_pos);
+		m_pSpriteCardBack->Draw(m_pos, s_kiCardWidth, s_kiCardHeight);
 	}
 }
 
